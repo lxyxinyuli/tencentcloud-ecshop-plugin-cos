@@ -10,7 +10,6 @@
 | 最新版本   | v1.0.0 (2020.09.27)                                           |
 | 适用平台   | [ECSHOP](https://www.ecshop.com/) 
 | 适用产品   | [腾讯云对象存储（COS）](https://cloud.tencent.com/product/cos)      |
-| GitHub项目| [腾讯云对象存储 ](https://github.com/Tencent-Cloud-Plugins/tencentcloud-ecshop-plugin-cos) |
 | 主创团队   | 腾讯云中小企业产品中心（SMB Product Center of Tencent Cloud）   
 
 ## 2.功能特性
@@ -90,13 +89,8 @@
 - **所属地域**：在腾讯云服务器所在地域。详情参考[腾讯云文档](https://cloud.tencent.com/document/product/457/44232)
 - **空间名称**：COS服务中存储桶的名称。详情参考[腾讯云文档](https://cloud.tencent.com/document/product/436/41153)
 - **访问域名**：存储桶的访问域名。详情参考[腾讯云文档](https://cloud.tencent.com/document/product/436/6224)
-## 5.获取入口
 
-| 插件入口 | 链接                                                         |
-| -------- | ------------------------------------------------------------ |
-| GitHub   | [link](https://github.com/Tencent-Cloud-Plugins/tencentcloud-ecshop-plugin-cos) |
-
-## 6.FAQ
+## 5.FAQ
 - **问题1**：开启腾讯云对象存储后上传商品的图片且成功，但是在页面中无法正常显示图片？
 > 检查"访问域名"是否填写正确
 
@@ -107,9 +101,9 @@
 - **问题3**：开启腾讯云对象存储后，批量上传商品的图片无法正常显示图片？
 > 需要你手动上传批量上传的商品图片到空间名称所做的存储桶中。附件在存储桶中的路径和附件在本地的'/ecshop/'目录下的相对路径一致。
 > 可使用[工具概览](https://cloud.tencent.com/document/product/436/6242)中介绍的上传工具上传附件。
-## 7.GitHub版本迭代记录
+## 6.GitHub版本迭代记录
 
-### 7.1 tencentcloud-ecshop-plugin-cos v1.0.0
+### 6.1 tencentcloud-ecshop-plugin-cos v1.0.0
 
 - 新增商品时支持将商品图片，商品缩略图，商品详情中的图片上传到腾讯云cos中存储
 - 商品展示时，商品的相关图片从腾讯云cos中获取
