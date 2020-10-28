@@ -1,0 +1,1 @@
+# tencentcloud-ecshop-plugin-cos
