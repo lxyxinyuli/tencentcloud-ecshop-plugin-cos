@@ -1,0 +1,146 @@
+<!-- $Id: user_info.htm 16854 2009-12-07 06:20:09Z sxc_shop $ -->
+{include file="pageheader.htm"}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+<div class="main-div">
+    <form method="post" action="?act=save_config" name="theForm" onsubmit="return validate()">
+        <table width="100%" >
+            <tr>
+                <td class="label">{$lang.global_secret}:</td>
+                <td>
+                    <input type="radio" name="global_secret" id="site_sec_yes" value="1"  onclick="switchKey(1)" />{$lang.yes}
+                    <input type="radio"  name="global_secret" id="site_sec_no" value="0"  onclick="switchKey(0)" />{$lang.no}
+                </td>
+            </tr>
+            <tr>
+                <td class="label" valign="top"><a href="javascript:showNotice('notice_secret_id');" title="点击此处查看提示信息"><img src="images/notice.svg" width="16" height="16" border="0" alt="点击此处查看提示信息"></a>
+                    {$lang.SecretId}:
+                </td>
+                <td class="panel-par">
+                    <input name="secret_id" id="secretId" type="password" value="{$center.secret_id}" size="40">
+                    <i class="far fa-eye fa-eye-slash" id="togglePassword_secretid" onclick="toggle_password('secretId', 'togglePassword_secretid')"></i>
+                    <br>
+                    <span class="notice-span" style="display:block" id="notice_secret_id">{$lang.SercetIdNotice}</span></td>
+            </tr>
+
+            <tr>
+                <td class="label" valign="top"><a href="javascript:showNotice('notice_secret_key');" title="点击此处查看提示信息"><img src="images/notice.svg" width="16" height="16" border="0" alt="点击此处查看提示信息"></a>
+                    {$lang.SecretKey}:
+                </td>
+                <td class="panel-par">
+                    <input name="secret_key" id="secretKey" type="password" value="{$center.secret_key}" size="40">
+                    <i class="far fa-eye fa-eye-slash" id="togglePassword_secretkey" onclick="toggle_password('secretKey', 'togglePassword_secretkey')"></i>
+                    <br>
+                    <span class="notice-span" style="display:block" id="notice_secret_key">{$lang.SercetKeyNotice}</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">
+                    <a href="javascript:showNotice('notice_user_experience');" title="点击此处查看提示信息"><img src="images/notice.svg" width="16" height="16" border="0" alt="点击此处查看提示信息"></a>
+                    {$lang.user_experience_opt}:
+                </td>
+                <td>
+                    <input type="radio" id="site_report_yes" name="user_experience" value="1"  />{$lang.yes}
+                    <input type="radio" id="site_report_no" name="user_experience" value="0"  />{$lang.no}
+                    <br>
+                    <span class="notice-span" style="display:block" id="notice_user_experience">{$lang.UserExperienceNotice}</span>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="{$lang.button_submit}" class="button" />
+                    <input type="reset" value="{$lang.button_reset}" class="button" />
+                    <input type="hidden" id="site_sec" value="{$center.global_secret}" />
+                    <input type="hidden" id="site_report" value="{$center.user_experience}" />    </td>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <div>
+        <table style="text-align: center">
+            <tbody>
+            <tr>
+                <td align="center">
+                    <span>
+                        <a href="https://openapp.qq.com/" target="_blank">文档中心</a>
+                    </span>
+                    <span class="link-span">
+                       <a href="https://github.com/Tencent-Cloud-Plugins/" target="_blank">GitHub</a>
+                    </span>
+                    <span class="link-span">
+                        <a href="https://support.qq.com/product/164613" target="_blank">反馈建议</a>
+                    </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{insert_scripts files="../js/utils.js,validator.js"}
+{literal}
+<script language="JavaScript">
+    <!--
+
+    onload = function()
+    {
+        // 开始检查订单
+        startCheckOrder();
+    }
+
+    var customSelect = document.getElementById('site_sec').value;
+    var siteReport = document.getElementById('site_report').value;
+    if (siteReport === '0'){
+        document.getElementById('site_report_no').checked=true;
+    } else {
+        document.getElementById('site_report_yes').checked=true;
+    }
+    if (customSelect === '1'){
+        document.getElementById('site_sec_yes').checked=true;
+    } else {
+        document.getElementById('site_sec_no').checked=true;
+        document.getElementById('secretId').readOnly=true;
+        document.getElementById('secretKey').readOnly=true;
+        document.getElementById('secretId').style.backgroundColor="gainsboro";
+        document.getElementById('secretKey').style.backgroundColor="gainsboro";
+    }
+    function switchKey(key) {
+        if (key === 1) {
+            document.getElementById('secretId').readOnly = false;
+            document.getElementById('secretKey').readOnly = false;
+            document.getElementById('secretId').style.backgroundColor="";
+            document.getElementById('secretKey').style.backgroundColor="";
+        } else {
+            document.getElementById('secretId').readOnly=true;
+            document.getElementById('secretKey').readOnly=true;
+            document.getElementById('secretId').style.backgroundColor="gainsboro";
+            document.getElementById('secretKey').style.backgroundColor="gainsboro";
+        }
+    }
+
+    /**
+     * 检查表单输入的数据
+     */
+    function validate()
+    {
+        validator = new Validator("theForm");
+        validator.required("secret_id",  no_secret_id);
+        validator.required("secret_key", no_secret_key);
+
+        return validator.passed();
+    }
+
+    function toggle_password(element_id, eye_id) {
+        var element = document.getElementById(element_id);
+        var eye = document.getElementById(eye_id);
+        if (element.type === "password") {
+            element.type = "text";
+            eye.classList.remove("fa-eye-slash");
+        } else {
+            element.type = "password";
+            eye.classList.add("fa-eye-slash");
+        }
+    }
+    //-->
+</script>
+{/literal}
+{include file="pagefooter.htm"}

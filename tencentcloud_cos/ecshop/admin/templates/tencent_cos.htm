@@ -1,0 +1,322 @@
+<!-- $Id: tencent_cos.htm 16854 2020-09-25 $ -->
+{include file="pageheader.htm"}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+
+<div class="main-div">
+    <form method="post" action="?act=save_config" name="theForm" onsubmit="return validate()">
+        <table width="100%" >
+            <tr>
+                <td class="label">
+                    <a href="javascript:showNotice('notice_cos_on');" title="点击此处查看提示信息"><img src="images/notice.svg" width="16" height="16" border="0" alt="点击此处查看提示信息"></a>
+                    {$lang.cos_on}:
+                </td>
+                <td>
+                    <input type="radio" name="switch" id="switch_on" value="1"  onclick="switchCos(1)" />{$lang.yes}
+                    <input type="radio"  name="switch" id="switch_off" value="0"  onclick="switchCos(0)" />{$lang.no}
+                    <br>
+                    <span class="notice-span" style="display:block" id="notice_cos_on">{$lang.CosOnNotice}</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">{$lang.custome_secret}:</td>
+                <td>
+                    <input type="radio" name="custome_secret" id="custome_secret_yes" value="1"  onclick="switchKey(1)" />{$lang.yes}
+                    <input type="radio"  name="custome_secret" id="custome_secret_no" value="0"  onclick="switchKey(0)" />{$lang.no}
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label" >{$lang.SecretId}:</td>
+                <td class="panel-par">
+                    <input name="secret_id" id="secretId" type="password" value="{$cos.secret_id}" size="40">
+                    <i class="far fa-eye fa-eye-slash" id="togglePassword_secretid" onclick="toggle_password('secretId', 'togglePassword_secretid')"></i>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="label" >{$lang.SecretKey}:</td>
+                <td class="panel-par">
+                    <input name="secret_key" id="secretKey" type="password" value="{$cos.secret_key}" size="40">
+                    <i class="far fa-eye fa-eye-slash" id="togglePassword_secretkey" onclick="toggle_password('secretKey', 'togglePassword_secretkey')"></i>
+
+                </td>
+            </tr>
+            <tr>
+                <td class="label" >
+                    <a href="javascript:showNotice('noticeregion_host');" title="点击此处查看提示信息"><img src="images/notice.svg" width="16" height="16" border="0" alt="点击此处查看提示信息"></a>
+                    {$lang.Region}:
+                </td>
+                <td class="panel-par">
+                    <input name="region" id="region" type="text" style="width: 124px;" value="{$cos.region}" size="40">
+                    <select name="user_rank" id="region_select" onchange="choose_region()">
+                        <option value="">请选择所属区域</option>
+                        <option value="ap-beijing-1" >北京一区</option>
+                        <option value="ap-beijing" >北京</option>
+                        <option value="ap-nanjing" >南京</option>
+                        <option value="ap-shanghai" >上海</option>
+                        <option value="ap-guangzhou" >广州</option>
+                        <option value="ap-chengdu" >成都</option>
+                        <option value="ap-chongqing" >重庆</option>
+                        <option value="ap-shenzhen-fsi" >深圳金融</option>
+                        <option value="ap-shanghai-fsi" >上海金融</option>
+                        <option value="ap-beijing-fsi" >北京金融</option>
+                        <option value="ap-hongkong" >中国香港</option>
+                        <option value="ap-singapore" >新加坡</option>
+                        <option value="ap-mumbai" >孟买</option>
+                        <option value="ap-seoul" >首尔</option>
+                        <option value="ap-bangkok" >曼谷</option>
+                        <option value="ap-tokyo" >东京</option>
+                        <option value="na-siliconvalley" >硅谷</option>
+                        <option value="na-ashburn" >弗吉尼亚</option>
+                        <option value="na-toronto" >多伦多</option>
+                        <option value="eu-frankfurt" >法兰克福</option>
+                        <option value="eu-moscow" >莫斯科</option>
+                    </select>
+                    <br>
+                    <span class="notice-span" style="display:block" id="noticeregion_host">{$lang.RegionNotice}</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="label" >
+                    <a href="javascript:showNotice('noticebucket_host');" title="点击此处查看提示信息"><img src="images/notice.svg" width="16" height="16" border="0" alt="点击此处查看提示信息"></a>
+                    {$lang.Bucket}:
+                </td>
+                <td class="panel-par">
+                    <input name="bucket" id="bucket" type="text" value="{$cos.bucket}" size="40">
+                    <br>
+                    <span class="notice-span" style="display:block" id="noticebucket_host">{$lang.BucketNotice}</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="label" >
+                    <a href="javascript:showNotice('noticeremoteurl_host');" title="点击此处查看提示信息">
+                        <img src="images/notice.svg" width="16" height="16" border="0" alt="点击此处查看提示信息">
+                    </a>
+                    {$lang.CosRemoteUrl}:</td>
+                <td class="panel-par">
+                    <input name="remote_url" id="remote_url" type="text" value="{$cos.remote_url}" size="40">
+                    <br>
+                    <span class="notice-span" style="display:block" id="noticeremoteurl_host">{$lang.RemoteUrlNotice}</span>
+                </td>
+            </tr>
+<!--            <tr>-->
+<!--                <td class="label" >{$lang.NoLocalFile}:</td>-->
+<!--                <td>-->
+<!--                    <input type="radio" name="no_local_file" id="no_local_file_yes" value="1" />{$lang.yes}-->
+<!--                    <input type="radio"  name="no_local_file" id="no_local_file_no" value="0" />{$lang.no}-->
+<!--                </td>-->
+<!--            </tr>-->
+            <tr>
+                <td class="label" >
+                    <a href="javascript:showNotice('costest_host');" title="点击此处查看提示信息">
+                        <img src="images/notice.svg" width="16" height="16" border="0" alt="点击此处查看提示信息">
+                    </a>
+                    {$lang.Test}:
+                </td>
+                <td>
+                    <input type="button" id="cos_test" value="{$lang.ButtonTest}" class="button" onclick="doTest()">
+                    <br>
+                    <span class="notice-span" style="display:block; color: red" id="costest_host"></span>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="{$lang.button_submit}" class="button" />
+                    <input type="hidden" id="custome_secret" value="{$cos.custome_secret}" />
+                    <input type="hidden" id="custome_no_local_file" value="{$cos.no_local_file}" />
+                    <input type="hidden" id="switch" value="{$cos.switch}" />
+                </td>
+            </tr>
+        </table>
+    </form>
+    <div>
+        <table style="text-align: center">
+            <tbody>
+            <tr>
+                <td align="center">
+                    <span>
+                        <a href="https://openapp.qq.com/" target="_blank">文档中心</a>
+                    </span>
+                    <span class="link-span">
+                       <a href="https://github.com/Tencent-Cloud-Plugins/" target="_blank">GitHub</a>
+                    </span>
+                    <span class="link-span">
+                        <a href="https://support.qq.com/product/164613" target="_blank">反馈建议</a>
+                    </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{insert_scripts files="../js/utils.js,validator.js"}
+{literal}
+<script language="JavaScript">
+    <!--
+
+    onload = function()
+    {
+        // 开始检查订单
+        startCheckOrder();
+    }
+
+    var customSelect = document.getElementById('custome_secret').value;
+    //var custome_no_local_file = document.getElementById('custome_no_local_file').value;
+    var cos_on = document.getElementById('switch').value;
+    if (cos_on === '1') {
+        document.getElementById('switch_on').checked=true;
+        switchCos(1);
+    } else {
+        document.getElementById('switch_off').checked=true;
+        switchCos(0);
+    }
+
+    // if (custome_no_local_file === '1') {
+    //     document.getElementById('no_local_file_yes').checked=true;
+    // } else {
+    //     document.getElementById('no_local_file_no').checked=true;
+    // }
+
+    if (customSelect === '1'){
+        document.getElementById('custome_secret_yes').checked=true;
+    } else {
+        document.getElementById('custome_secret_no').checked=true;
+        document.getElementById('secretId').readOnly = true;
+        document.getElementById('secretKey').readOnly=true;
+        document.getElementById('secretId').style.backgroundColor="gainsboro";
+        document.getElementById('secretKey').style.backgroundColor="gainsboro";
+        document.getElementById('secretId').value="{$center.secret_id}";
+        document.getElementById('secretKey').value="{$center.secret_key}";
+    }
+
+    function switchCos(key) {
+        if (key === 1) {
+            document.getElementById('custome_secret_yes').disabled = false;
+            document.getElementById('custome_secret_no').disabled = false;
+            document.getElementById('secretId').readOnly = false;
+            document.getElementById('secretKey').readOnly = false;
+            document.getElementById('region').readOnly = false;
+            document.getElementById('bucket').readOnly = false;
+            document.getElementById('remote_url').readOnly = false;
+            //document.getElementById('no_local_file_yes').disabled = false;
+            //document.getElementById('no_local_file_no').disabled = false;
+            document.getElementById('cos_test').disabled = false;
+            document.getElementById('region_select').disabled = false;
+
+            document.getElementById('custome_secret_yes').style.backgroundColor="";
+            document.getElementById('custome_secret_no').style.backgroundColor="";
+            document.getElementById('secretId').style.backgroundColor="";
+            document.getElementById('secretKey').style.backgroundColor="";
+            document.getElementById('region').style.backgroundColor="";
+            document.getElementById('bucket').style.backgroundColor="";
+            document.getElementById('remote_url').style.backgroundColor="";
+            //document.getElementById('no_local_file_yes').style.backgroundColor="";
+            //document.getElementById('no_local_file_no').style.backgroundColor="";
+        } else {
+            document.getElementById("custome_secret_yes").disabled=true;
+            document.getElementById("custome_secret_no").disabled=true;
+            document.getElementById('secretId').readOnly = true;
+            document.getElementById('secretKey').readOnly = true;
+            document.getElementById('region').readOnly = true;
+            document.getElementById('bucket').readOnly = true;
+            document.getElementById('remote_url').readOnly = true;
+            //document.getElementById("no_local_file_yes").disabled=true;
+            //document.getElementById("no_local_file_no").disabled=true;
+            document.getElementById("cos_test").disabled=true;
+            document.getElementById("region_select").disabled=true;
+
+            document.getElementById('custome_secret_yes').style.backgroundColor="gainsboro";
+            document.getElementById('custome_secret_no').style.backgroundColor="gainsboro";
+            document.getElementById('secretId').style.backgroundColor="gainsboro";
+            document.getElementById('secretKey').style.backgroundColor="gainsboro";
+            document.getElementById('region').style.backgroundColor="gainsboro";
+            document.getElementById('bucket').style.backgroundColor="gainsboro";
+            document.getElementById('remote_url').style.backgroundColor="gainsboro";
+            //document.getElementById('no_local_file_yes').style.backgroundColor="gainsboro";
+            //document.getElementById('no_local_file_no').style.backgroundColor="gainsboro";
+        }
+    }
+
+    function switchKey(key) {
+        if (key === 1) {
+            document.getElementById('secretId').readOnly = false;
+            document.getElementById('secretKey').readOnly = false;
+            document.getElementById('secretId').style.backgroundColor="";
+            document.getElementById('secretKey').style.backgroundColor="";
+            document.getElementById('secretId').value="{$cos.secret_id}";
+            document.getElementById('secretKey').value="{$cos.secret_key}";
+        } else {
+            document.getElementById('secretId').readOnly = true;
+            document.getElementById('secretKey').readOnly = true;
+            document.getElementById('secretId').style.backgroundColor = "gainsboro";
+            document.getElementById('secretKey').style.backgroundColor = "gainsboro";
+            document.getElementById('secretId').value = "{$center.secret_id}";
+            document.getElementById('secretKey').value = "{$center.secret_key}";
+        }
+    }
+
+    /**
+     * 检查表单输入的数据
+     */
+    function validate()
+    {
+        validator = new Validator("theForm");
+        var cos_on = document.getElementById('switch').value;
+        if (cos_on === '1') {
+            validator.required("secretId",  no_secret_id);
+            validator.required("secretKey", no_secret_key);
+            validator.required("region", no_region);
+            validator.required("bucket", no_bucket);
+            validator.required("remote_url", no_remote_url);
+        }
+
+        return validator.passed();
+    }
+
+    /**
+     * 测试参数有效性
+     */
+    function doTest()
+    {
+        var filters = new Object;
+        filters.secret_id = document.getElementById('secretId').value;
+        filters.secret_key = document.getElementById('secretKey').value;
+        filters.region = document.getElementById('region').value;
+        filters.bucket = document.getElementById('bucket').value;
+        filters.remote_url = document.getElementById('remote_url').value;
+        Ajax.call('tencent_cos.php?act=cos_test', filters, searchGoodsResponse, 'POST', 'JSON');
+    }
+
+    function searchGoodsResponse(result)
+    {
+        if (result.error === 0) {
+            document.getElementById('costest_host').textContent = result.content.msg;
+        } else {
+            document.getElementById('costest_host').textContent = result.message.msg;
+        }
+    }
+
+    /**
+     * 选择所属区域
+     */
+    function choose_region()
+    {
+        document.getElementById('region').value = document.getElementById('region_select').value;
+    }
+
+    function toggle_password(element_id, eye_id) {
+        var element = document.getElementById(element_id);
+        var eye = document.getElementById(eye_id);
+        if (element.type === "password") {
+            element.type = "text";
+            eye.classList.remove("fa-eye-slash");
+        } else {
+            element.type = "password";
+            eye.classList.add("fa-eye-slash");
+        }
+    }
+    //-->
+</script>
+{/literal}
+{include file="pagefooter.htm"}
