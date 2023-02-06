@@ -31,22 +31,6 @@ $smarty->assign('affiliate', $affiliate);
 
 $goods_id = isset($_REQUEST['id'])  ? intval($_REQUEST['id']) : 0;
 
-$ua = strtolower($_SERVER['HTTP_USER_AGENT']);
-
-$uachar = "/(nokia|sony|ericsson|mot|samsung|sgh|lg|philips|panasonic|alcatel|lenovo|cldc|midp|mobile)/i";
-
-if(($ua == '' || preg_match($uachar, $ua))&& !strpos(strtolower($_SERVER['REQUEST_URI']),'wap'))
-{
-    $Loaction = 'h5/#product?id='.$goods_id;
-
-    if (!empty($Loaction))
-    {
-        ecs_header("Location: $Loaction\n");
-
-        exit;
-    }
-
-}
 /*------------------------------------------------------ */
 //-- 改变属性、数量时重新计算商品价格
 /*------------------------------------------------------ */
@@ -79,6 +63,24 @@ if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'price')
 
         $shop_price  = get_final_price($goods_id, $number, true, $attr_id);
         $res['result'] = price_format($shop_price * $number);
+        // 查看该商品是否有分类
+        $good_sql ="SELECT product_id ".
+            " FROM " .$GLOBALS['ecs']->table('products').
+            " WHERE goods_id = '" . $goods_id . "'";
+        if ($GLOBALS['db']->getRow($good_sql)){
+            $goods_attr = get_goods_attr_one($_REQUEST['attr']);
+
+            $sql = "SELECT product_number ".
+                " FROM " .$GLOBALS['ecs']->table('products').
+                " WHERE goods_attr = '" . $goods_attr . "'";
+            $res['product_number']  = $GLOBALS['db']->getRow($sql);
+            if (!$res['product_number']){
+                $res['product_number'] = 'ok';
+            }
+        }
+
+
+
     }
 
     die($json->encode($res));
@@ -165,7 +167,6 @@ if (!$smarty->is_cached('goods.dwt', $cache_id))
     $smarty->assign('cfg',          $_CFG);
     $smarty->assign('promotion',       get_promotion_info($goods_id));//促销信息
     $smarty->assign('promotion_info', get_promotion_info());
-    $smarty->assign('im',              get_im());//在线客服
 
     /* 获得商品的信息 */
     $goods = get_goods_info($goods_id);
@@ -203,12 +204,18 @@ if (!$smarty->is_cached('goods.dwt', $cache_id))
                 $goods['bonus_money'] = price_format($goods['bonus_money']);
             }
         }
+
+        // 相关下载
+        $sql = "SELECT * FROM " . $ecs->table('goods_upload') .
+            " WHERE goods_id = '$goods_id' ORDER BY goods_id DESC";
+        $file_list = $db->getAll($sql);
+        //update
         $cos_options = isset($_CFG['cos_plugin']) ? json_decode($_CFG['cos_plugin'], true) : array();
         if (!empty($cos_options) && $cos_options['switch'] === '1' && $cos_options['remote_url'] != "") {
             preg_match_all('/<a[^>]+href=([\'"])(?<href>.+?)\1[^>]*>/i', $goods['goods_desc'], $hrefResult);
             preg_match_all('/<img[^>]+src=([\'"])(?<src>.+?)\1[^>]*>/i', $goods['goods_desc'], $srcResult);
             $result = array_merge($hrefResult['href'], $srcResult['src']);
-            // 将商品详情中的附件地址替换成腾讯云存储地址
+            // 将商品详情中的附件地址替换成腾讯云存储地址，抄袭点
             foreach ($result as $link) {
                 $goods['goods_desc'] = str_replace($link, $cos_options['remote_url'] . "/" . ltrim($link, '/'), $goods['goods_desc']);
             }
@@ -216,7 +223,9 @@ if (!$smarty->is_cached('goods.dwt', $cache_id))
             $goods['goods_img'] = $cos_options['remote_url'] . "/" . $goods['goods_img'];
             $goods['goods_thumb'] = $cos_options['remote_url'] . "/" . $goods['goods_thumb'];
         }
+        //end
         $smarty->assign('goods',              $goods);
+        $smarty->assign('file_list',          $file_list);
         $smarty->assign('goods_id',           $goods['goods_id']);
         $smarty->assign('promote_end_time',   $goods['gmt_end_time']);
         $smarty->assign('categories',         get_categories_tree($goods['cat_id']));  // 分类树
@@ -650,5 +659,3 @@ function get_package_goods_list($goods_id)
 
     return $res;
 }
-
-?>

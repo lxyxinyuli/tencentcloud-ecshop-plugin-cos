@@ -3,7 +3,7 @@
 /**
  * ECSHOP 动态内容函数库
  * ============================================================================
- * * 版权所有 2005-2018 上海商派网络科技有限公司，并保留所有权利。
+ * * 版权所有 2005-2022 商派软件有限公司，并保留所有权利。
  * 网站地址: http://www.ecshop.com；
  * ----------------------------------------------------------------------------
  * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
@@ -115,7 +115,7 @@ function insert_history()
  * @access  public
  * @return  string
  */
-function insert_cart_info()
+/*function insert_cart_info()
 {
     $where = "session_id = '" . SESS_ID . "'";
     if ($_SESSION['user_id'])
@@ -141,7 +141,112 @@ function insert_cart_info()
     $str = sprintf($GLOBALS['_LANG']['cart_info'], $number, price_format($amount, false));
 
     return '<a href="flow.php" title="' . $GLOBALS['_LANG']['view_cart'] . '">' . $str . '</a>';
+}*/
+
+//fd30下拉购物车修改
+function insert_cart_info()
+
+{
+
+    /**
+     * 当用户登录时，不使用session来取数据
+     * 未登录时，使用session来判断
+     */
+    if($_SESSION['user_id'] > 0)
+    {
+        $sql = 'SELECT c.*,g.goods_name,g.goods_thumb,g.goods_id,c.goods_number,c.goods_price' .' FROM ' . $GLOBALS['ecs']->table('cart') ." AS c ". " LEFT JOIN ".$GLOBALS['ecs']->table('goods')." AS g ON g.goods_id=c.goods_id "." WHERE user_id = '" . $_SESSION['user_id'] . "' AND rec_type = '" . CART_GENERAL_GOODS . "'";
+    }
+    else
+    {
+        $sql = 'SELECT c.*,g.goods_name,g.goods_thumb,g.goods_id,c.goods_number,c.goods_price' .' FROM ' . $GLOBALS['ecs']->table('cart') ." AS c ". " LEFT JOIN ".$GLOBALS['ecs']->table('goods')." AS g ON g.goods_id=c.goods_id "." WHERE session_id = '" . SESS_ID . "' AND rec_type = '" . CART_GENERAL_GOODS . "'";
+    }
+
+
+    $row = $GLOBALS['db']->GetAll($sql);
+
+                $arr = array();
+
+                foreach($row AS $k=>$v)
+
+                {
+
+                                $arr[$k]['goods_thumb']  =get_image_path($v['goods_id'], $v['goods_thumb'], true);
+
+        $arr[$k]['short_name']   = $GLOBALS['_CFG']['goods_name_length'] > 0 ?
+
+                                               sub_str($v['goods_name'], $GLOBALS['_CFG']['goods_name_length']) : $v['goods_name'];
+
+                                $arr[$k]['url']          = build_uri('goods', array('gid' => $v['goods_id']), $v['goods_name']);
+
+                                $arr[$k]['goods_number'] = $v['goods_number'];
+
+                                $arr[$k]['goods_name']   = $v['goods_name'];
+
+                                $arr[$k]['goods_price']  = price_format($v['goods_price']);
+
+                                $arr[$k]['rec_id']       = $v['rec_id'];
+
+                }
+
+
+    if($_SESSION['user_id'] > 0)
+    {
+        $sql = 'SELECT SUM(goods_number) AS number, SUM(goods_price * goods_number) AS amount' .
+
+           ' FROM ' . $GLOBALS['ecs']->table('cart') .
+
+           " WHERE user_id = '" . $_SESSION['user_id'] . "' AND rec_type = '" . CART_GENERAL_GOODS . "'";
+    }
+    else
+    {
+        $sql = 'SELECT SUM(goods_number) AS number, SUM(goods_price * goods_number) AS amount' .
+
+           ' FROM ' . $GLOBALS['ecs']->table('cart') .
+
+           " WHERE session_id = '" . SESS_ID . "' AND rec_type = '" . CART_GENERAL_GOODS . "'";
+    }
+
+
+    $row = $GLOBALS['db']->GetRow($sql);
+
+
+
+    if ($row)
+
+    {
+
+        $number = intval($row['number']);
+
+        $amount = floatval($row['amount']);
+
+    }
+
+    else
+
+    {
+
+        $number = 0;
+
+        $amount = 0;
+
+    }
+
+
+
+    $GLOBALS['smarty']->assign('str',sprintf($GLOBALS['_LANG']['cart_info'], $number, price_format($amount, false)));
+
+        $GLOBALS['smarty']->assign('goods',$arr);
+
+        $GLOBALS['smarty']->assign('goods_number',$number);
+
+        $GLOBALS['smarty']->assign('order_amount',$amount);
+
+    $output = $GLOBALS['smarty']->fetch('library/cart.lbi');
+
+    return $output;
+
 }
+//fd30下拉购物车结束
 
 /**
  * 调用指定的广告位的广告
@@ -166,7 +271,7 @@ function insert_ads($arr)
                 'LEFT JOIN ' . $GLOBALS['ecs']->table('ad_position') . ' AS p ON a.position_id = p.position_id ' .
                 "WHERE enabled = 1 AND start_time <= '" . $time . "' AND end_time >= '" . $time . "' ".
                     "AND a.position_id = '" . $arr['id'] . "' " .
-                'ORDER BY rnd LIMIT ' . $arr['num'];
+                'ORDER BY ad_id LIMIT ' . $arr['num'];
         $res = $GLOBALS['db']->GetAll($sql);
     }
     else
@@ -179,7 +284,7 @@ function insert_ads($arr)
                     'LEFT JOIN ' . $GLOBALS['ecs']->table('ad_position') . ' AS p ON a.position_id = p.position_id ' .
                     "WHERE enabled = 1 AND a.position_id = '" . $arr['id'] .
                         "' AND start_time <= '" . $time . "' AND end_time >= '" . $time . "' " .
-                    'ORDER BY rnd LIMIT 1';
+                    'ORDER BY ad_id LIMIT 1';
             $static_res[$arr['id']] = $GLOBALS['db']->GetAll($sql);
         }
         $res = $static_res[$arr['id']];
@@ -293,17 +398,19 @@ function insert_comments($arr)
     /* 验证码相关设置 */
     if ((intval($GLOBALS['_CFG']['captcha']) & CAPTCHA_COMMENT) && gd_version() > 0)
     {
-
+        //update
         $captcha_type = isset($GLOBALS['_CFG']['captcha_type']) ? $GLOBALS['_CFG']['captcha_type'] : '';
         $GLOBALS['smarty']->assign('captcha_type', $captcha_type);
+        //
         $GLOBALS['smarty']->assign('enabled_captcha', 1);
         $GLOBALS['smarty']->assign('rand', mt_rand());
-
+        //update
         $data  = isset($GLOBALS['_CFG']['captcha_plugin']) ? json_decode($GLOBALS['_CFG']['captcha_plugin'], true) : array();
         if (isset($data['captcha_app_id']))
         {
             $GLOBALS['smarty']->assign('captcha_app_id', $data['captcha_app_id']);
         }
+        //
     }
     $GLOBALS['smarty']->assign('username',     stripslashes($_SESSION['user_name']));
     $GLOBALS['smarty']->assign('email',        $_SESSION['email']);

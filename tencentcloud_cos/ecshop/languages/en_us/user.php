@@ -3,8 +3,7 @@
 /**
  * ECSHOP User Center language file
  * ============================================================================
- * All right reserved (C) 2005-2018 Beijing Yi Shang Interactive Technology
- * Development Ltd.
+ * All right reserved (C) 2005-2021 Shopex Software Co., Ltd.
  * Web site: http://www.ecshop.com
  * ----------------------------------------------------------------------------
  * This is a free/open source software；it means that you can modify, use and
@@ -37,26 +36,7 @@ $_LANG['label_user_surplus'] = 'Account Details';
 $_LANG['label_track_packages'] = 'Tracking packages';
 $_LANG['label_transform_points'] = 'Points transform';
 $_LANG['label_logout'] = 'Logout';
-$_LANG['label_account_bind'] = 'Account binding';
-$_LANG['bind_wechat'] = 'Bind WeChat';
-$_LANG['bind_wechat_acc'] = 'Bind WeChat Account';
-$_LANG['bind_oldAccount'] = 'Bind old account';
-$_LANG['Unbind'] = 'Unbind';
-$_LANG['sweep_bind_wechat'] = 'Sweep, bind to WeChat account';
-$_LANG['expand'] = 'expand';
-$_LANG['collapse'] = 'collapse';
-$_LANG['confirm_unbind'] = 'Are you sure you want to unbind?';
-$_LANG['use_shopex_acc'] = 'Please use ECshop account after unbinding';
-$_LANG['login'] = 'login';
-$_LANG['confirm'] = 'confirm';
-$_LANG['cancel'] = 'cancel';
-$_LANG['unbind_success'] = 'Untied successfully';
-$_LANG['has_bind'] = 'Bind';
-$_LANG['un_bind'] = 'Unbind';
-$_LANG['associate_wechat'] = 'You are using an ecshop account to associate a WeChat account';
-$_LANG['mind_account'] = 'Please keep in mind the ECshop account';
-$_LANG['unbind_des'] = 'After unbinding, you need to use this account to log in. After unbinding, the account can still be used normally. Orders and other information will not be lost. Forgot your password, please retrieve the password on the login page.';
-$_LANG['associate_des'] = 'The associated WeChat account under this account will be untied.';
+
 /* 会员余额(预付款) */
 $_LANG['add_surplus_log'] = 'Details';
 $_LANG['view_application'] = 'View application record';
@@ -712,6 +692,8 @@ $_LANG['passwd_questions']['interest']        = 'My best interest';
 $_LANG['passwd_questions']['favorite_novel']  = 'My favorite novel';
 $_LANG['passwd_questions']['favorite_equipe'] = 'My favorite sports team';
 
+//update
 $_LANG['captcha_error'] = 'The verification code you entered is incorrect';
 $_LANG['invalid_captcha_config'] = 'Tencent Cloud verification code configuration is incorrect';
+//
 ?>

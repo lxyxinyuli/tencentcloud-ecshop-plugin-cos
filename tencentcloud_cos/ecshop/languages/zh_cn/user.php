@@ -3,7 +3,7 @@
 /**
  * ECSHOP 用户中心语言项
  * ============================================================================
- * * 版权所有 2005-2018 上海商派网络科技有限公司，并保留所有权利。
+ * * 版权所有 2005-2021 商派软件有限公司，并保留所有权利。
  * 网站地址: http://www.ecshop.com；
  * ----------------------------------------------------------------------------
  * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
@@ -37,26 +37,7 @@ $_LANG['label_user_surplus'] = '资金管理';
 $_LANG['label_track_packages'] = '跟踪包裹';
 $_LANG['label_transform_points'] = '积分兑换';
 $_LANG['label_logout'] = '退出';
-$_LANG['label_account_bind'] = '账户绑定';
-$_LANG['bind_wechat'] = '绑定微信';
-$_LANG['bind_wechat_acc'] = '绑定微信账户';
-$_LANG['bind_oldAccount'] = '绑定老账户';
-$_LANG['Unbind'] = '解除绑定';
-$_LANG['sweep_bind_wechat'] = '扫一扫，绑定微信号';
-$_LANG['expand'] = '展开';
-$_LANG['collapse'] = '收起';
-$_LANG['confirm_unbind'] = '您确定要解除绑定吗？';
-$_LANG['use_shopex_acc'] = '解除绑定后请用ECshop账号';
-$_LANG['login'] = '登录';
-$_LANG['confirm'] = '确认';
-$_LANG['cancel'] = '取消';
-$_LANG['unbind_success'] = '解绑成功';
-$_LANG['has_bind'] = '已绑定';
-$_LANG['un_bind'] = '解绑';
-$_LANG['associate_wechat'] = '您正在使用ecshop账号关联微信账号';
-$_LANG['mind_account'] = '请您牢记该ECshop账号';
-$_LANG['unbind_des'] = '解绑后需要使用此账号进行登录，解绑后的账号仍可正常使用，订单等信息不会丢失，忘记密码请在登录页找回密码';
-$_LANG['associate_des'] = '该账号下关联微信账号将全部解绑';
+
 /* 会员余额(预付款) */
 $_LANG['add_surplus_log'] = '查看帐户明细';
 $_LANG['view_application'] = '查看申请记录';
@@ -94,7 +75,7 @@ $_LANG['back_page_up'] = '返回上一页';
 $_LANG['back_account_log'] = '返回帐户明细列表';
 $_LANG['amount_gt_zero'] = '请在“金额”栏输入大于0的数字';
 $_LANG['select_payment_pls'] = '请选择支付方式';
-$_LANG['check_account_money_fail'] = '修改的金额与充值金额不相等，不能进行修改';
+$_LANG['check_account_money_fail'] = '修改的金额与充值金额不相等，不能进行修改!';
 
 //JS语言项
 $_LANG['account_js']['surplus_amount_empty'] = '请输入您要操作的金额数量！';
@@ -123,8 +104,8 @@ $_LANG['booking_js']['booking_amount_empty'] = '请输入您要订购的商品�
 $_LANG['booking_js']['booking_amount_error'] = '您输入的订购数量格式不正确！';
 $_LANG['booking_js']['describe_empty'] = '请输入您的订购描述信息！';
 $_LANG['booking_js']['contact_username_empty'] = '请输入联系人姓名！';
-$_LANG['booking_js']['email_empty'] = '请输入联系人的电子邮件地址！';
-$_LANG['booking_js']['email_error'] = '您输入的电子邮件地址格式不正确！';
+$_LANG['booking_js']['email_empty'] = '请输入联系人的邮箱！';
+$_LANG['booking_js']['email_error'] = '您输入的邮箱格式不正确！';
 $_LANG['booking_js']['contact_phone_empty'] = '请输入联系人的电话！';
 
 /* 个人资料 */
@@ -148,23 +129,23 @@ $_LANG['bonus_sn_not_exist'] = '此红包号码不存在！';
 $_LANG['add_bonus_sucess'] = '添加新的红包操作成功！';
 $_LANG['add_bonus_false'] = '添加新的红包操作失败！';
 
-$_LANG['not_login'] = '用户未登录。无法完成操作';
+$_LANG['not_login'] = '用户未登录，无法完成操作';
 $_LANG['profile_lnk'] = '查看我的个人资料';
-$_LANG['edit_email_failed'] = '编辑电子邮件地址失败！';
+$_LANG['edit_email_failed'] = '编辑邮箱失败！';
 $_LANG['edit_profile_success'] = '您的个人资料已经成功修改！';
 $_LANG['edit_profile_failed'] = '修改个人资料操作失败！';
-$_LANG['oldpassword_error'] = '您输入的旧密码有误!请确认再后输入！';
+$_LANG['oldpassword_error'] = '您输入的旧密码有误，请确认后再输入！';
 
 //JS语言项
 $_LANG['profile_js']['bonus_sn_empty'] = '请输入您要添加的红包号码！';
 $_LANG['profile_js']['bonus_sn_error'] = '您输入的红包号码格式不正确！';
 
-$_LANG['profile_js']['email_empty'] = '请输入您的电子邮件地址！';
-$_LANG['profile_js']['email_error'] = '您输入的电子邮件地址格式不正确！';
+$_LANG['profile_js']['email_empty'] = '请输入您的邮箱！';
+$_LANG['profile_js']['email_error'] = '您输入的邮箱格式不正确！';
 $_LANG['profile_js']['old_password_empty'] = '请输入您的原密码！';
 $_LANG['profile_js']['new_password_empty'] = '请输入您的新密码！';
 $_LANG['profile_js']['confirm_password_empty'] = '请输入您的确认密码！';
-$_LANG['profile_js']['both_password_error'] = '您现两次输入的密码不一致！';
+$_LANG['profile_js']['both_password_error'] = '您两次输入的密码不一致！';
 $_LANG['profile_js']['msg_blank'] = '不能为空';
 $_LANG['profile_js']['no_select_question'] = '- 您没有完成密码提示问题的操作';
 
@@ -178,7 +159,7 @@ $_LANG['consignee_name'] = '收货人姓名';
 $_LANG['country_province'] = '配送区域';
 $_LANG['please_select'] = '请选择';
 $_LANG['city_district'] = '城市/地区';
-$_LANG['email_address'] = '电子邮件地址';
+$_LANG['email_address'] = '邮箱';
 $_LANG['detailed_address'] = '详细地址';
 $_LANG['postalcode'] = '邮政编码';
 $_LANG['phone'] = '电话';
@@ -199,32 +180,32 @@ $_LANG['search_ship'] = '查看支持的配送方式';
 
 $_LANG['del_address_false'] = '删除收货地址失败！';
 $_LANG['add_address_success'] = '添加新地址成功！';
-$_LANG['edit_address_success'] = '您的收货地址信息已成功更新！';
+$_LANG['edit_address_success'] = '您的收货地址信息更新成功！';
 $_LANG['address_list_lnk'] = '返回地址列表';
-$_LANG['add_address'] = '新增收货地址';
+$_LANG['add_address'] = '添加收货地址';
 $_LANG['confirm_edit'] = '确认修改';
 
-$_LANG['confirm_drop_address'] = '你确认要删除该收货地址吗？';
+$_LANG['confirm_drop_address'] = '您确定要删除该收货地址吗？';
 
 /* 会员密码找回 */
-$_LANG['username_and_email'] = '请输入您注册的用户名和注册时填写的电子邮件地址。';
-$_LANG['enter_new_password'] = '请输入您的新密码';
-$_LANG['username_no_email'] = '您填写的用户名与电子邮件地址不匹配，请重新输入！';
+$_LANG['username_and_email'] = '请输入您注册的用户名和注册时填写的邮箱！';
+$_LANG['enter_new_password'] = '请输入您的新密码！';
+$_LANG['username_no_email'] = '您填写的用户名与邮箱不匹配，请重新输入！';
 $_LANG['fail_send_password'] = '发送邮件出错，请与管理员联系！';
 $_LANG['send_success'] = '重置密码的邮件已经发到您的邮箱：';
 $_LANG['parm_error'] = '参数错误，请返回！';
 $_LANG['edit_password_failure'] = '您输入的原密码不正确！';
 $_LANG['edit_password_success'] = '您的新密码已设置成功！';
-$_LANG['username_not_match_email'] = '用户名与电子邮件地址不匹配，请重新输入！';
+$_LANG['username_not_match_email'] = '用户名与邮箱不匹配，请重新输入！';
 $_LANG['get_question_username'] = '请输入您注册的用户名以取得您的密码提示问题。';
-$_LANG['no_passwd_question'] = '您没有设置密码提示问题，无法通过这种方式找回密码。';
+$_LANG['no_passwd_question'] = '您没有设置密码提示问题，无法通过这种方式找回密码！';
 $_LANG['input_answer'] = '请根据您注册时设置的密码问题输入设置的答案';
-$_LANG['wrong_passwd_answer'] = '您输入的密码答案是错误的';
+$_LANG['wrong_passwd_answer'] = '您输入的密码答案不正确！';
 
 //JS语言项
 $_LANG['password_js']['user_name_empty'] = '请输入您的用户名！';
-$_LANG['password_js']['email_address_empty'] = '请输入您的电子邮件地址！';
-$_LANG['password_js']['email_address_error'] = '您输入的电子邮件地址格式不正确！';
+$_LANG['password_js']['email_address_empty'] = '请输入您的邮箱！';
+$_LANG['password_js']['email_address_error'] = '您输入的邮箱格式不正确！';
 $_LANG['password_js']['new_password_empty'] = '请输入您的新密码！';
 $_LANG['password_js']['confirm_password_empty'] = '请输入您的确认密码！';
 $_LANG['password_js']['both_password_error'] = '您两次输入的密码不一致！';
@@ -249,7 +230,7 @@ $_LANG['type'][M_CUSTOME] = '售后';
 $_LANG['type'][M_BUY] = '求购';
 $_LANG['type'][M_BUSINESS] = '商家留言';
 
-$_LANG['add_message_success'] = '发表留言成功';
+$_LANG['add_message_success'] = '发表留言成功！';
 $_LANG['message_list_lnk'] = '返回留言列表';
 $_LANG['msg_title_empty'] = '留言标题为空';
 $_LANG['upload_file_limit'] = '文件大小超过了限制 %dKB';
@@ -260,15 +241,15 @@ $_LANG['view_upload_file'] = '查看上传的文件';
 $_LANG['upload_file_type'] = '您上传的文件类型不正确,请重新上传！';
 $_LANG['upload_file_error'] = '文件上传出现错误,请重新上传！';
 $_LANG['message_empty'] = '您现在还没有留言！';
-$_LANG['msg_success'] = '您的留言已成功提交！';
-$_LANG['confirm_remove_msg'] = '你确实要彻底删除这条留言吗？';
+$_LANG['msg_success'] = '您的留言提交成功！';
+$_LANG['confirm_remove_msg'] = '您确定要彻底删除这条留言吗？';
 
 /* 会员红包 */
-$_LANG['bonus_is_used'] = '你输入的红包你已经领取过了！';
-$_LANG['bonus_is_used_by_other'] = '你输入的红包已经被其他人领取！';
+$_LANG['bonus_is_used'] = '您输入的红包您已经领取过了！';
+$_LANG['bonus_is_used_by_other'] = '您输入的红包已经被其他人领取！';
 $_LANG['bonus_add_success'] = '您已经成功的添加了一个新的红包！';
-$_LANG['bonus_not_exist'] = '你输入的红包不存在';
-$_LANG['user_bonus_empty'] = '您现在还没有红包';
+$_LANG['bonus_not_exist'] = '您输入的红包不存在！';
+$_LANG['user_bonus_empty'] = '您现在还没有红包！';
 $_LANG['add_bonus_sucess'] = '添加新的红包操作成功！';
 $_LANG['add_bonus_false'] = '添加新的红包操作失败！';
 $_LANG['bonus_add_expire'] = '该红包已经过期！';
@@ -283,19 +264,19 @@ $_LANG['order_status'] = '订单状态';
 $_LANG['first_order'] = '主订单';
 $_LANG['second_order'] = '从订单';
 $_LANG['merge_order'] = '合并订单';
-$_LANG['no_priv'] = '你没有权限操作他人订单';
+$_LANG['no_priv'] = '您没有权限操作别人的订单';
 $_LANG['buyer_cancel'] = '用户取消';
 $_LANG['cancel'] = '取消订单';
 $_LANG['pay_money'] = '付款';
 $_LANG['view_order'] = '查看订单';
 $_LANG['received'] = '确认收货';
 $_LANG['ss_received'] = '已完成';
-$_LANG['confirm_cancel'] = '您确认要取消该订单吗？取消后此订单将视为无效订单';
+$_LANG['confirm_cancel'] = '取消后此订单将视为无效订单，您确认要取消该订单吗？';
 $_LANG['merge_ok'] = '订单合并成功！';
-$_LANG['merge_invalid_order'] = '对不起，您选择合并的订单不允许进行合并的操作。';
+$_LANG['merge_invalid_order'] = '对不起，您选择合并的订单不允许进行合并的操作！';
 $_LANG['select'] = '请选择...';
-$_LANG['order_not_pay'] = "你的订单状态为 %s ,不需要付款";
-$_LANG['order_sn_empty'] = '合并主订单号不能为空';
+$_LANG['order_not_pay'] = "您的订单状态为 %s ,不需要付款";
+$_LANG['order_sn_empty'] = '合并主订单号不能为空！';
 $_LANG['merge_order_notice'] = '订单合并是在发货前将相同状态的订单合并成一新的订单。<br />收货地址，送货方式等以主定单为准。';
 $_LANG['order_exist'] = '该订单不存在！';
 $_LANG['order_is_group_buy'] = '[团购]';
@@ -331,18 +312,18 @@ $_LANG['ps'][PS_PAYING] = '付款中';
 $_LANG['ps'][PS_PAYED] = '已付款';
 
 $_LANG['shipping_not_need'] = '无需使用配送方式';
-$_LANG['current_os_not_unconfirmed'] = '当前订单状态不是“未确认”。';
+$_LANG['current_os_not_unconfirmed'] = '当前订单状态不是“未确认”！';
 $_LANG['current_os_already_confirmed'] = '当前订单已经被确认，无法取消，请与店主联系。';
 $_LANG['current_ss_not_cancel'] = '只有在未发货状态下才能取消，你可以与店主联系。';
 $_LANG['current_ps_not_cancel'] = '只有未付款状态才能取消，要取消请联系店主。';
-$_LANG['confirm_received'] = '你确认已经收到货物了吗？';
+$_LANG['confirm_received'] = '您确认已经收到货物了吗？';
 
 /* 合并订单及订单详情 */
 $_LANG['merge_order_success'] = '合并的订单的操作已成功！';
-$_LANG['merge_order_failed']  = '合并的订单的操作失败！请返回重试！';
+$_LANG['merge_order_failed']  = '合并的订单的操作失败！请返回重试';
 $_LANG['order_sn_not_null'] = '请填写要合并的订单号';
-$_LANG['two_order_sn_same'] = '要合并的两个订单号不能相同';
-$_LANG['order_not_exist'] = "订单 %s 不存在";
+$_LANG['two_order_sn_same'] = '要合并的两个订单号不能相同！';
+$_LANG['order_not_exist'] = "订单 %s 不存在！";
 $_LANG['os_not_unconfirmed_or_confirmed'] = " %s 的订单状态不是“未确认”或“已确认”";
 $_LANG['ps_not_unpayed'] = "订单 %s 的付款状态不是“未付款”";
 $_LANG['ss_not_unshipped'] = "订单 %s 的发货状态不是“未发货”";
@@ -400,12 +381,12 @@ $_LANG['virtual_card_info'] = '虚拟卡信息';
 $_LANG['back_home_lnk'] = '返回首页';
 $_LANG['get_password_lnk'] = '返回获取密码页面';
 $_LANG['get_password_by_question'] = '密码问题找回密码';
-$_LANG['get_password_by_mail'] = '注册邮件找回密码';
+$_LANG['get_password_by_mail'] = '注册邮箱找回密码';
 $_LANG['back_retry_answer'] = '返回重试';
 
 /* 登录 注册 */
 $_LANG['label_username'] = '用户名';
-$_LANG['label_email'] = 'email';
+$_LANG['label_email'] = '邮箱';
 $_LANG['label_password'] = '密码';
 $_LANG['label_confirm_password'] = '确认密码';
 $_LANG['label_password_intensity'] = '密码强度';
@@ -417,14 +398,14 @@ $_LANG['other_home_phone'] = '家庭电话';
 $_LANG['other_mobile_phone'] = '手机';
 $_LANG['remember'] = '请保存我这次的登录信息。';
 
-$_LANG['msg_un_blank'] = '用户名不能为空';
-$_LANG['msg_un_length'] = '用户名最长不得超过7个汉字';
-$_LANG['msg_un_format'] = '用户名含有非法字符';
-$_LANG['msg_un_registered'] = '用户名已经存在,请重新输入';
+$_LANG['msg_un_blank'] = '用户名不能为空！';
+$_LANG['msg_un_length'] = '用户名最长不得超过7个汉字！';
+$_LANG['msg_un_format'] = '用户名含有非法字符！';
+$_LANG['msg_un_registered'] = '用户名已经存在,请更换！';
 $_LANG['msg_can_rg'] = '可以注册';
-$_LANG['msg_email_blank'] = '邮件地址不能为空';
-$_LANG['msg_email_registered'] = '邮箱已存在,请重新输入';
-$_LANG['msg_email_format'] = '邮件地址不合法';
+$_LANG['msg_email_blank'] = '邮箱不能为空！';
+$_LANG['msg_email_registered'] = '邮箱已存在,请更换！';
+$_LANG['msg_email_format'] = '邮箱格式不正确！';
 
 $_LANG['login_success'] = '登录成功';
 $_LANG['confirm_login'] = '确认登录';
@@ -438,22 +419,22 @@ $_LANG['female'] = '女';
 $_LANG['secrecy'] = '保密';
 $_LANG['birthday'] = '出生日期';
 
-$_LANG['logout'] = '您已经成功的退出了。';
-$_LANG['username_empty'] = '用户名为空';
-$_LANG['username_invalid'] = '用户名 %s 含有敏感字符';
-$_LANG['username_exist'] = '用户名 %s 已经存在';
-$_LANG['username_inexistent'] = '用户名 %s 不存在';
-$_LANG['username_not_allow'] = '用户名 %s 不允许注册';
+$_LANG['logout'] = '您已经成功的退出了！';
+$_LANG['username_empty'] = '用户名不能为空！';
+$_LANG['username_invalid'] = '用户名 %s 含有敏感字符！';
+$_LANG['username_exist'] = '用户名 %s 已经存在！';
+$_LANG['username_inexistent'] = '用户名 %s 不存在！';
+$_LANG['username_not_allow'] = '用户名 %s 不允许注册！';
 $_LANG['confirm_register'] = '确认注册';
 
 $_LANG['agreement'] = "我已看过并接受《<a href=\"article.php?cat_id=-1\" style=\"color:blue\" target=\"_blank\">用户协议</a>》";
 
-$_LANG['email_empty'] = 'email为空';
-$_LANG['email_invalid'] = '%s 不是合法的email地址';
-$_LANG['email_exist'] = '%s 已经存在';
-$_LANG['email_not_allow'] = 'Email %s 不允许注册';
+$_LANG['email_empty'] = '邮箱不能为空！';
+$_LANG['email_invalid'] = '%s 不是合法的邮箱格式！';
+$_LANG['email_exist'] = '%s 已经存在！';
+$_LANG['email_not_allow'] = '邮箱 %s 不允许注册！';
 $_LANG['register'] = '注册新用户名';
-$_LANG['register_success'] = '用户名 %s 注册成功';
+$_LANG['register_success'] = '用户名 %s 注册成功！';
 
 $_LANG['passwd_question'] = '密码提示问题';
 $_LANG['sel_question'] = '请选择密码提示问题';
@@ -507,52 +488,53 @@ $_LANG['no_tag'] = '暂时没有标签';
 $_LANG['confirm_drop_tag'] = '您确认要删除此标签吗？';
 
 /* user_passport.dwt js语言文件 */
-$_LANG['passport_js']['username_empty'] = '- 用户名不能为空。';
-$_LANG['passport_js']['username_shorter'] = '- 用户名长度不能少于 3 个字符。';
-$_LANG['passport_js']['username_invalid'] = '- 用户名只能是由字母数字以及下划线组成。';
-$_LANG['passport_js']['password_empty'] = '- 登录密码不能为空。';
-$_LANG['passport_js']['password_shorter'] = '- 登录密码不能少于 6 个字符。';
-$_LANG['passport_js']['confirm_password_invalid'] = '- 两次输入密码不一致';
-$_LANG['passport_js']['email_empty'] = '- Email 为空';
-$_LANG['passport_js']['email_invalid'] = '- Email 不是合法的地址';
-$_LANG['passport_js']['agreement'] = '- 您没有接受协议';
+$_LANG['passport_js']['username_empty'] = '- 用户名不能为空！';
+$_LANG['passport_js']['username_shorter'] = '- 用户名长度不能少于 3 个字符！';
+$_LANG['passport_js']['username_invalid'] = '- 用户名只能是由字母数字以及下划线组成！';
+$_LANG['passport_js']['password_empty'] = '- 登录密码不能为空！';
+$_LANG['passport_js']['password_shorter'] = '- 登录密码不能少于 6 个字符！';
+$_LANG['passport_js']['confirm_password_invalid'] = '- 两次输入密码不一致！';
+$_LANG['passport_js']['email_empty'] = '- 邮箱为空！';
+$_LANG['passport_js']['email_invalid'] = '- 邮箱格式不正确！';
+$_LANG['passport_js']['agreement'] = '- 您没有接受协议！';
 $_LANG['passport_js']['msn_invalid'] = '- msn地址不是一个有效的邮件地址';
 $_LANG['passport_js']['qq_invalid'] = '- QQ号码不是一个有效的号码';
-$_LANG['passport_js']['home_phone_invalid'] = '- 家庭电话不是一个有效号码';
-$_LANG['passport_js']['office_phone_invalid'] = '- 办公电话不是一个有效号码';
-$_LANG['passport_js']['mobile_phone_invalid'] = '- 手机号码不是一个有效号码';
-$_LANG['passport_js']['msg_un_blank'] = '* 用户名不能为空';
-$_LANG['passport_js']['msg_un_length'] = '* 用户名最长不得超过7个汉字';
-$_LANG['passport_js']['msg_un_format'] = '* 用户名含有非法字符';
-$_LANG['passport_js']['msg_un_registered'] = '* 用户名已经存在,请重新输入';
+$_LANG['passport_js']['home_phone_invalid'] = '- 家庭电话不是一个有效号码!';
+$_LANG['passport_js']['phone_invalid'] = '- 电话不是一个有效号码!';
+$_LANG['passport_js']['office_phone_invalid'] = '- 办公电话不是一个有效号码!';
+$_LANG['passport_js']['mobile_phone_invalid'] = '- 手机号码不是一个有效号码!';
+$_LANG['passport_js']['msg_un_blank'] = '* 用户名不能为空!';
+$_LANG['passport_js']['msg_un_length'] = '* 用户名最长不得超过7个汉字!';
+$_LANG['passport_js']['msg_un_format'] = '* 用户名含有非法字符!';
+$_LANG['passport_js']['msg_un_registered'] = '* 用户名已经存在,请更换！';
 $_LANG['passport_js']['msg_can_rg'] = '* 可以注册';
-$_LANG['passport_js']['msg_email_blank'] = '* 邮件地址不能为空';
-$_LANG['passport_js']['msg_email_registered'] = '* 邮箱已存在,请重新输入';
-$_LANG['passport_js']['msg_email_format'] = '* 邮件地址不合法';
+$_LANG['passport_js']['msg_email_blank'] = '* 邮箱不能为空！';
+$_LANG['passport_js']['msg_email_registered'] = '* 邮箱已存在,请更换！';
+$_LANG['passport_js']['msg_email_format'] = '* 邮箱格式不正确！';
 $_LANG['passport_js']['msg_blank'] = '不能为空';
-$_LANG['passport_js']['no_select_question'] = '- 您没有完成密码提示问题的操作';
-$_LANG['passport_js']['passwd_balnk'] = '- 密码中不能包含空格';
+$_LANG['passport_js']['no_select_question'] = '- 您没有完成密码提示问题的操作！';
+$_LANG['passport_js']['passwd_balnk'] = '- 密码中不能包含空格！';
 
 
 /* user_clips.dwt js 语言文件 */
-$_LANG['clips_js']['msg_title_empty'] = '留言标题为空';
-$_LANG['clips_js']['msg_content_empty'] = '留言内容为空';
-$_LANG['clips_js']['msg_title_limit'] = '留言标题不能超过200个字';
+$_LANG['clips_js']['msg_title_empty'] = '留言标题为空！';
+$_LANG['clips_js']['msg_content_empty'] = '留言内容为空！';
+$_LANG['clips_js']['msg_title_limit'] = '留言标题不能超过200个字！';
 
 /* 合并订单js */
 $_LANG['merge_order_js']['from_order_empty'] = '请选择要合并的从订单';
 $_LANG['merge_order_js']['to_order_empty'] = '请选择要合并的主订单';
 $_LANG['merge_order_js']['order_same'] = '主订单和从订单相同，请重新选择';
-$_LANG['merge_order_js']['confirm_merge'] = '您确实要合并这两个订单吗？';
+$_LANG['merge_order_js']['confirm_merge'] = '您确定要合并这两个订单吗？';
 
 /* 将用户订单中商品加入购物车 */
 $_LANG['order_id_empty'] = '未指定订单号';
 $_LANG['return_to_cart_success'] = '订单中商品已经成功加入购物车中';
 
 /* 保存用户订单收货地址 */
-$_LANG['consigness_empty'] = '收货人姓名为空';
-$_LANG['address_empty'] = '收货地址详情为空';
-$_LANG['require_unconfirmed'] = '该订单状态下不能再修改地址';
+$_LANG['consigness_empty'] = '收货人姓名不能为空！';
+$_LANG['address_empty'] = '收货地址详情不能为空！';
+$_LANG['require_unconfirmed'] = '该订单状态下不能再修改地址！';
 
 /* 红包详情 */
 $_LANG['bonus_sn'] = '红包序号';
@@ -631,11 +613,11 @@ $_LANG['affiliate_qrcode_share_text'] = '微信扫一扫，快速分享！';
 $_LANG['register_affiliate'] = '推荐会员ID %s ( %s ) 注册送积分';
 $_LANG['register_points'] = '注册送积分';
 
-$_LANG['validate_ok'] = '%s 您好，您email %s 已通过验证';
-$_LANG['validate_fail'] = '验证失败，请确认你的验证链接是否正确';
-$_LANG['validate_mail_ok'] = '验证邮件发送成功';
+$_LANG['validate_ok'] = '%s 您好，您邮箱 %s 已通过验证！';
+$_LANG['validate_fail'] = '验证失败，请确认你的验证链接是否正确！';
+$_LANG['validate_mail_ok'] = '验证邮件发送成功！';
 
-$_LANG['not_validated'] = '您还没有通过邮件认证';
+$_LANG['not_validated'] = '您还没有通过邮件认证！';
 $_LANG['resend_hash_mail'] = '点此发送认证邮件';
 
 $_LANG['query_status'] = '查询状态';
@@ -653,18 +635,18 @@ $_LANG['recommend_webcode'] = '网页签名代码';
 $_LANG['recommend_bbscode'] = '论坛签名代码';
 $_LANG['im_code'] = '聊天分享';
 $_LANG['code_copy'] = '复制代码';
-$_LANG['show_good_to_you'] = '推荐给你一个好东西';
+$_LANG['show_good_to_you'] = '推荐给您一个好物品';
 
 
 /* 积分兑换 */
 $_LANG['transform_points'] = '积分兑换';
-$_LANG['invalid_points'] = '你输入的积分是不一个合法值';
+$_LANG['invalid_points'] = '您输入的积分是不一个合法值！';
 $_LANG['invalid_input'] = '无效';
-$_LANG['overflow_points'] = '您输入的兑换积分超过您的实际积分';
-$_LANG['to_pay_points'] = '恭喜您， 你%s论坛%s兑换了%s的商城消费积分';
-$_LANG['to_rank_points'] = '恭喜您， 你%s论坛%s兑换了%s的商城等级积分';
-$_LANG['from_pay_points'] = '恭喜您， 你%s的商城消费积分兑换%s论坛%s';
-$_LANG['from_rank_points'] = '恭喜您， 你%s论坛%s兑换了%s的商城消费积分';
+$_LANG['overflow_points'] = '您输入的兑换积分超过您的当前积分！';
+$_LANG['to_pay_points'] = '恭喜， 您%s论坛%s兑换了%s的商城消费积分';
+$_LANG['to_rank_points'] = '恭喜， 您%s论坛%s兑换了%s的商城等级积分';
+$_LANG['from_pay_points'] = '恭喜， 您%s的商城消费积分兑换%s论坛%s';
+$_LANG['from_rank_points'] = '恭喜， 您%s论坛%s兑换了%s的商城消费积分';
 $_LANG['cur_points'] = '您的当前积分';
 $_LANG['rule_list'] = '兑换规则';
 $_LANG['transform'] = '兑换';
@@ -680,10 +662,10 @@ $_LANG['exchange_points'][0] = '商城等级积分';
 $_LANG['exchange_points'][1] = '商城消费积分';
 $_LANG['exchange_action'] = '换';
 $_LANG['exchange_js']['deny'] = '禁止兑换';
-$_LANG['exchange_js']['balance'] = '您的{%s}余额不足，请重新输入';
-$_LANG['exchange_deny'] = '该积分不允许兑换';
-$_LANG['exchange_success'] = '恭喜您， 你用%s个%s兑换了%s个%s';
-$_LANG['exchange_error_1'] = 'UCenter提交积分兑换时发生错误';
+$_LANG['exchange_js']['balance'] = '您的{%s}余额不足，请重新输入！';
+$_LANG['exchange_deny'] = '该积分不允许兑换！';
+$_LANG['exchange_success'] = '恭喜， 您用%s个%s兑换了%s个%s';
+$_LANG['exchange_error_1'] = 'UCenter提交积分兑换时发生错误！';
 $_LANG['rank_points'] = '商城等级积分';
 $_LANG['pay_points'] = '商城消费积分';
 
@@ -713,6 +695,8 @@ $_LANG['passwd_questions']['interest']        = '我最大的爱好？';
 $_LANG['passwd_questions']['favorite_novel']  = '我最喜欢的小说？';
 $_LANG['passwd_questions']['favorite_equipe'] = '我最喜欢的运动队？';
 
+//update
 $_LANG['captcha_error'] = '您输入的验证码不正确。';
 $_LANG['invalid_captcha_config'] = '腾讯云验证码配置不正确。';
+//
 ?>

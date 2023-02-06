@@ -4,13 +4,13 @@
 
 > 腾讯云对象存储实现网站静态媒体资源与腾讯云COS的互通，有效降低本地存储负载，提升用户访问网站媒体资源的体验。
 
-| 标题       | 内容                                                         |
-| ---------- | ------------------------------------------------------------ |
-| 中文名称   | 腾讯云对象存储扩展                                         |
-| 最新版本   | v1.0.0 (2020.09.27)                                           |
-| 适用平台   | [ECSHOP](https://www.ecshop.com/) 
-| 适用产品   | [腾讯云对象存储（COS）](https://cloud.tencent.com/product/cos)      |
-| 主创团队   | 腾讯云中小企业产品中心（SMB Product Center of Tencent Cloud）   
+| 标题     | 内容                                                         |
+| -------- | ------------------------------------------------------------ |
+| 中文名称 | 腾讯云对象存储扩展                                           |
+| 最新版本 | v1.0.1 (2023.02.26)                                          |
+| 适用平台 | [ECSHOP](https://www.ecshop.com/)                            |
+| 适用产品 | [腾讯云对象存储（COS）](https://cloud.tencent.com/product/cos) |
+| 主创团队 | 腾讯云中小企业产品中心（SMB Product Center of Tencent Cloud） |
 
 ## 2.功能特性
 - 新增商品时支持将商品图片，商品缩略图，商品详情中的图片上传到腾讯云cos中存储
@@ -20,7 +20,7 @@
 ## 3.安装指引
 
 ### 3.1.部署方式一：通过GitHub部署安装
-腾讯云对象存储功能兼容的ECShop版本：v4.0.7 RELEASE 20200102
+腾讯云对象存储功能兼容的ECShop版本：v4.1.13 RELEASE 20221111
 > 1. git clone https://github.com/Tencent-Cloud-Plugins/tencentcloud-ecshop-plugin-cos.git，仓库中的代码包含腾讯验证码功能和对象存储功能，安装后可选中是否开启。
 > 2. 将tencentcloud-captcha/ecshop文件夹中相关文件的代码合并到源码中对应文件中，推荐使用代码比较工具（Beyoned Compare）进行代码合并
 - **修改说明1**：ecshop/js/目录中加入腾讯云验证码依赖的TCaptcha.js文件
@@ -103,8 +103,14 @@
 > 可使用[工具概览](https://cloud.tencent.com/document/product/436/6242)中介绍的上传工具上传附件。
 ## 6.GitHub版本迭代记录
 
-### 6.1 tencentcloud-ecshop-plugin-cos v1.0.0
+### 6.1 tencentcloud-ecshop-plugin-cos v1.0.0（适用于ecshop 4.07版本）
 
 - 新增商品时支持将商品图片，商品缩略图，商品详情中的图片上传到腾讯云cos中存储
 - 商品展示时，商品的相关图片从腾讯云cos中获取
 - 删除商品时，腾讯云存储中与商品关联的图片也会同步删除
+
+### 6.2 tencentcloud-ecshop-plugin-cos v1.0.1（适用于ecshop 4.13版本）
+
+- Beyond compare对比合入上一版插件代码到ecshop 4.13版本源码中
+- 修复商品相册中get存储桶中图片url携带根路径问题（templates\goods_info.htm）
+- 修复商品相册中单击查看图片，url被复写两次，导致图片无法正常显示问题（goods.php)

@@ -27,6 +27,7 @@ $_REQUEST['cmt'] = isset($_REQUEST['cmt']) ? json_str_iconv($_REQUEST['cmt']) : 
 
 $json   = new JSON;
 $result = array('error' => 0, 'message' => '', 'content' => '');
+
 if (empty($_REQUEST['act']))
 {
     /*
@@ -52,6 +53,7 @@ if (empty($_REQUEST['act']))
     {
         if ((intval($_CFG['captcha']) & CAPTCHA_COMMENT) && gd_version() > 0)
         {
+            //update
             $captcha_type = isset($_CFG['captcha_type']) ? $_CFG['captcha_type'] : '';
             // 1-默认验证码  2-腾讯云验证码
             if ($captcha_type === '1')
@@ -79,77 +81,78 @@ if (empty($_REQUEST['act']))
                     $result['message'] = $_LANG['invalid_captcha'];
                 }
             }
-
-            $factor = intval($_CFG['comment_factor']);
-            if ($cmt->type == 0 && $factor > 0)
-            {
-                /* 只有商品才检查评论条件 */
-                switch ($factor)
+//end
+                $factor = intval($_CFG['comment_factor']);
+                if ($cmt->type == 0 && $factor > 0)
                 {
-                    case COMMENT_LOGIN :
-                        if ($_SESSION['user_id'] == 0)
-                        {
-                            $result['error']   = 1;
-                            $result['message'] = $_LANG['comment_login'];
-                        }
-                        break;
-
-                    case COMMENT_CUSTOM :
-                        if ($_SESSION['user_id'] > 0)
-                        {
-                            $sql = "SELECT o.order_id FROM " . $ecs->table('order_info') . " AS o ".
-                                   " WHERE user_id = '" . $_SESSION['user_id'] . "'".
-                                   " AND (o.order_status = '" . OS_CONFIRMED . "' or o.order_status = '" . OS_SPLITED . "') ".
-                                   " AND (o.pay_status = '" . PS_PAYED . "' OR o.pay_status = '" . PS_PAYING . "') ".
-                                   " AND (o.shipping_status = '" . SS_SHIPPED . "' OR o.shipping_status = '" . SS_RECEIVED . "') ".
-                                   " LIMIT 1";
-
-
-                             $tmp = $db->getOne($sql);
-                             if (empty($tmp))
-                             {
+                    /* 只有商品才检查评论条件 */
+                    switch ($factor)
+                    {
+                        case COMMENT_LOGIN :
+                            if ($_SESSION['user_id'] == 0)
+                            {
                                 $result['error']   = 1;
+                                $result['message'] = $_LANG['comment_login'];
+                            }
+                            break;
+
+                        case COMMENT_CUSTOM :
+                            if ($_SESSION['user_id'] > 0)
+                            {
+                                $sql = "SELECT o.order_id FROM " . $ecs->table('order_info') . " AS o ".
+                                       " WHERE user_id = '" . $_SESSION['user_id'] . "'".
+                                       " AND (o.order_status = '" . OS_CONFIRMED . "' or o.order_status = '" . OS_SPLITED . "') ".
+                                       " AND (o.pay_status = '" . PS_PAYED . "' OR o.pay_status = '" . PS_PAYING . "') ".
+                                       " AND (o.shipping_status = '" . SS_SHIPPED . "' OR o.shipping_status = '" . SS_RECEIVED . "') ".
+                                       " LIMIT 1";
+
+
+                                 $tmp = $db->getOne($sql);
+                                 if (empty($tmp))
+                                 {
+                                    $result['error']   = 1;
+                                    $result['message'] = $_LANG['comment_custom'];
+                                 }
+                            }
+                            else
+                            {
+                                $result['error'] = 1;
                                 $result['message'] = $_LANG['comment_custom'];
-                             }
-                        }
-                        else
-                        {
-                            $result['error'] = 1;
-                            $result['message'] = $_LANG['comment_custom'];
-                        }
-                        break;
-                    case COMMENT_BOUGHT :
-                        if ($_SESSION['user_id'] > 0)
-                        {
-                            $sql = "SELECT o.order_id".
-                                   " FROM " . $ecs->table('order_info'). " AS o, ".
-                                   $ecs->table('order_goods') . " AS og ".
-                                   " WHERE o.order_id = og.order_id".
-                                   " AND o.user_id = '" . $_SESSION['user_id'] . "'".
-                                   " AND og.goods_id = '" . $cmt->id . "'".
-                                   " AND (o.order_status = '" . OS_CONFIRMED . "' or o.order_status = '" . OS_SPLITED . "') ".
-                                   " AND (o.pay_status = '" . PS_PAYED . "' OR o.pay_status = '" . PS_PAYING . "') ".
-                                   " AND (o.shipping_status = '" . SS_SHIPPED . "' OR o.shipping_status = '" . SS_RECEIVED . "') ".
-                                   " LIMIT 1";
-                             $tmp = $db->getOne($sql);
-                             if (empty($tmp))
-                             {
+                            }
+                            break;
+                        case COMMENT_BOUGHT :
+                            if ($_SESSION['user_id'] > 0)
+                            {
+                                $sql = "SELECT o.order_id".
+                                       " FROM " . $ecs->table('order_info'). " AS o, ".
+                                       $ecs->table('order_goods') . " AS og ".
+                                       " WHERE o.order_id = og.order_id".
+                                       " AND o.user_id = '" . $_SESSION['user_id'] . "'".
+                                       " AND og.goods_id = '" . $cmt->id . "'".
+                                       " AND (o.order_status = '" . OS_CONFIRMED . "' or o.order_status = '" . OS_SPLITED . "') ".
+                                       " AND (o.pay_status = '" . PS_PAYED . "' OR o.pay_status = '" . PS_PAYING . "') ".
+                                       " AND (o.shipping_status = '" . SS_SHIPPED . "' OR o.shipping_status = '" . SS_RECEIVED . "') ".
+                                       " LIMIT 1";
+                                 $tmp = $db->getOne($sql);
+                                 if (empty($tmp))
+                                 {
+                                    $result['error']   = 1;
+                                    $result['message'] = $_LANG['comment_brought'];
+                                 }
+                            }
+                            else
+                            {
                                 $result['error']   = 1;
                                 $result['message'] = $_LANG['comment_brought'];
-                             }
-                        }
-                        else
-                        {
-                            $result['error']   = 1;
-                            $result['message'] = $_LANG['comment_brought'];
-                        }
-
+                            }
+                    }
                 }
-            }
-            /* 无错误就保存留言 */
-            if (empty($result['error']))
-            {
-                add_comment($cmt);
+
+                /* 无错误就保存留言 */
+                if (empty($result['error']))
+                {
+                    add_comment($cmt);
+                }
             }
         }
         else
@@ -271,6 +274,7 @@ if ($result['error'] == 0)
     /* 验证码相关设置 */
     if ((intval($_CFG['captcha']) & CAPTCHA_COMMENT) && gd_version() > 0)
     {
+        //update
         $captcha_type = isset($_CFG['captcha_type']) ? $_CFG['captcha_type'] : '';
 
         $smarty->assign('captcha_type', $captcha_type);
@@ -281,11 +285,12 @@ if ($result['error'] == 0)
         {
             $smarty->assign('captcha_app_id', $data['captcha_app_id']);
         }
+        //
     }
-
     $result['message'] = $_CFG['comment_check'] ? $_LANG['cmt_submit_wait'] : $_LANG['cmt_submit_done'];
     $result['content'] = $smarty->fetch("library/comments_list.lbi");
 }
+
 echo $json->encode($result);
 
 /*------------------------------------------------------ */
@@ -323,5 +328,3 @@ function add_comment($cmt)
     }*/
     return $result;
 }
-
-?>

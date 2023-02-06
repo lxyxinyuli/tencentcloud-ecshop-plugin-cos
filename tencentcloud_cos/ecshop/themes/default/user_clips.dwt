@@ -136,6 +136,7 @@
                 <td align="right">{$lang.upload_img}：</td>
                 <td><input type="file" name="message_img"  size="45"  class="inputBg" /></td>
               </tr>
+              //update
               <!-- 判断是否启用验证码{if $enabled_captcha} -->
               <tr>
                 <td align="right">{$lang.comment_captcha}：</td>
@@ -159,6 +160,7 @@
                 </td>
               </tr>
               <!-- {/if} -->
+              //
               <tr>
                 <td>&nbsp;</td>
                 <td><input type="hidden" name="act" value="act_add_message" />
@@ -421,7 +423,7 @@
           <!-- {if $affiliate.config.separate_by eq 0} -->
           <!-- 下线人数、分成 -->
           <div class="blank"></div>
-          <h5><span><a name="myrecommend">{$lang.affiliate_member}</a></span></h5>
+          <h5><span><a name="myrecommend" style="color:#FFFFFF">{$lang.affiliate_member}</a></span></h5>
           <div class="blank"></div>
           <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
             <tr align="center">
@@ -650,6 +652,7 @@ copyToClipboard = function(txt)
 {foreach from=$lang.clips_js item=item key=key}
 var {$key} = "{$item}";
 {/foreach}
+//update
 document.getElementById('codePassButton').hidden = true;
 
 function onClickCode() {

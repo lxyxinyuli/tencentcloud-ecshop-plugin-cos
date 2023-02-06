@@ -1,11 +1,9 @@
 <!-- $Id: goods_info.htm 17126 2010-04-23 10:30:26Z liuhui $ -->
 {include file="pageheader.htm"}
-<script src="../admin/js/jquery.min.js"></script>
-
 {insert_scripts files="../js/utils.js,selectzone.js,colorselector.js"}
 <script type="text/javascript" src="../js/calendar.php?lang={$cfg_lang}"></script>
 <link href="../js/calendar/calendar.css" rel="stylesheet" type="text/css" />
-<link href="styles/upload.css" rel="stylesheet" type="text/css" />
+
 {if $warning}
 <ul style="padding:0; margin: 0; list-style-type:none; color: #CC0000;">
   <li style="border: 1px solid #CC0000; background: #FFFFCC; padding: 10px; margin-bottom: 5px;" >{$warning}</li>
@@ -25,14 +23,15 @@
         class="tab-back" id="linkgoods-tab">{$lang.tab_linkgoods}</span>{if $code eq ''}<span
         class="tab-back" id="groupgoods-tab">{$lang.tab_groupgoods}</span>{/if}<span
         class="tab-back" id="article-tab">{$lang.tab_article}</span>
+<!--        <span class="tab-back" id="upload-tab">{$lang.tab_upload}</span>-->
       </p>
     </div>
 
     <!-- tab body -->
     <div id="tabbody-div">
-      <form enctype="multipart/form-data" action="" method="post" name="theForm" id="test">
+      <form enctype="multipart/form-data" action="" method="post" name="theForm" >
         <!-- 鏈€澶ф枃浠堕檺鍒 -->
-        <input type="hidden" name="MAX_FILE_SIZE" value="2097152" />
+        <input type="hidden" name="MAX_FILE_SIZE" value="5242880" />
         <!-- 閫氱敤淇℃伅 -->
         <table width="90%" id="general-table" align="center" class="gk-table">
           <tr>
@@ -88,6 +87,13 @@
                {/if}
             </td>
           </tr>
+ <!--         <tr>
+            <td class="label">是否支持PC端配送方式:</td>
+            <td>
+              <input type="radio" name="type" value="true" {if $delivery_status == 'true' || $cat_info.type == null } checked="true"{/if}/> {$lang.yes}
+              <input type="radio" name="type" value="false" {if $delivery_status == 'false'} checked="true"{/if} /> {$lang.no}
+            </td>
+          </tr><-->
          {if $suppliers_exists eq 1}
           <tr>
             <td class="label">{$lang.label_suppliers}</td>
@@ -168,10 +174,29 @@
               <br /><span class="notice-span" {if $help_open}style="display:block" {else} style="display:none" {/if} id="noticPoints">{$lang.notice_integral}</span>
             </td>
           </tr>
+          <!-- 拼团 start -->
+          <tr>
+            <td class="label"><label for="is_pintuan"><input type="checkbox" id="is_pintuan" name="is_pintuan" value="1" {if $goods.is_pintuan}checked="checked"{/if} onclick="pintuan(this.checked);check()" /> 拼团价：</label></td>
+            <td id="pt_price"><input type="text" id="pt_price" name="pt_price" value="{$goods.pt_price}" size="20" /></td>
+          </tr>
+          <!-- 拼团 end -->
+
+          <!-- 是否开启秒杀-->
+          <tr>
+            <td class="label"><label for="ms_promote"><input type="checkbox" id="ms_promote" name="ms_promote" value="true" {if $goods.active == "true"}checked="checked"{/if} onclick="handlePromote_ms(this.checked);check()" />是否开启秒杀：</label></td>
+            <td id="promote_31">
+              <input type="datetime-local" id="promote_11" name="start_time" value="{$goods.start_time}" size="20" style="height: 30px; border: 1px solid #ccc;"/>
+              <input type="datetime-local" id="promote_111" name="end_time" value="{$goods.end_time}" size="20" style="height: 30px; border: 1px solid #ccc;"/>
+              <p>商品数量：<input type="text" id="promote_1111" name="spike_count" value="{$goods.spike_count}" size="20" placeholder="请输入秒杀商品的数量" style="height: 30px; border: 1px solid #ccc;"/></p>
+              <p>商品金额：<input type="text" id="promote_11111" name="spike_sum" value="{$goods.spike_sum}" size="20" placeholder="请输入秒杀商品的数量" style="height: 30px; border: 1px solid #ccc;"/></p>
+            </td>
+          </tr>
+
           <tr>
             <td class="label"><label for="is_promote"><input type="checkbox" id="is_promote" name="is_promote" value="1" {if $goods.is_promote}checked="checked"{/if} onclick="handlePromote(this.checked);" /> {$lang.lab_promote_price}</label></td>
             <td id="promote_3"><input type="text" id="promote_1" name="promote_price" value="{$goods.promote_price}" size="20" /></td>
           </tr>
+          
           <tr id="promote_4">
             <td class="label" id="promote_5">{$lang.lab_promote_date}</td>
             <td id="promote_6" class="cal-group">
@@ -180,51 +205,33 @@
           </tr>
           <tr>
             <td class="label">{$lang.lab_picture}</td>
-            <td>
-              <div class="upImg">
-
-
-
-                   <div class="img-inner">
-                    {if $goods.goods_img}
-                     {if $tencent_cos eq '1'}
-                       <img src="{$goods.goods_img}" alt="">
-                     {else}
-                        <img src="../{$goods.goods_img}" alt="">
-                     {/if}
-                    {else}
-                    <span class="add">+</span>
-                    {/if}
-
-                  </div>
-                  <input type="file" name="goods_img" size="35" class="up-ipt" accept="image/png,image/gif,image/jpg,image/jpeg,image/bmp"/>
-
-              </div>
-              <br /><input type="text" size="40" value="{$lang.lab_picture_url}" style="color:#aaa;" onfocus="if (this.value == '{$lang.lab_picture_url}'){this.value='http://';this.style.color='#000';}" name="goods_img_url"/>
+            <td style="position:relative">
+              <input type="file" name="goods_img" size="35" />
+              {if $goods.original_img}
+              <a href="goods.php?act=show_image&img_url={$goods.original_img}" target="_blank" id = "pictures"><img src="images/yes.svg" width="16"></a>
+              {else}
+              <img src="images/no.svg" width="16">
+              {/if}
+<!--              <br /><input type="text" size="40" value="{$lang.lab_picture_url}" style="color:#aaa;" onfocus="if (this.value == '{$lang.lab_picture_url}'){this.value='http://';this.style.color='#000';}" name="goods_img_url"/>-->
+              {if $goods.panduan}
+              <img style="height:100px;width:100px;position:absolute;top:-20px;left:300px;display:none;" src="{$goods.original_img}" alt="" id="tppicture">
+              {else}
+              <img style="height:100px;width:100px;position:absolute;top:-20px;left:300px;display:none;" src="/{$goods.original_img}" alt="" id="tppicture">
+              {/if}
             </td>
           </tr>
           <tr id="auto_thumb_1">
             <td class="label"> {$lang.lab_thumb}</td>
             <td id="auto_thumb_3">
-              <div class="upImg">
-                <div class="img-inner">
-                  {if $goods.goods_img}
-                    {if $tencent_cos eq '1'}
-                      <img src="{$goods.goods_thumb}" alt="">
-                    {else}
-                      <img src="../{$goods.goods_thumb}" alt="">
-                    {/if}
-                  {else}
-                    <span class="add">+</span>
-                  {/if}
-                 </div>
-                <input type="file" size="35" name="goods_thumbs" class="up-ipt" accept="image/png,image/gif,image/jpg,image/jpeg,image/bmp"/>
-
-              </div>
-              <br /><input type="text" size="40" value="{$lang.lab_thumb_url}" style="color:#aaa;" onfocus="if (this.value == '{$lang.lab_thumb_url}'){this.value='http://';this.style.color='#000';}" name="goods_thumb_url"/>
+              <input type="file" name="goods_thumb" size="35" />
+              {if $goods.goods_thumb}
+                <a href="goods.php?act=show_image&img_url={$goods.goods_thumb}" target="_blank"><img src="images/yes.svg" width="16"></a>
+              {else}
+                <img src="images/no.svg" width="16">
+              {/if}
+<!--              <br /><input type="text" size="40" value="{$lang.lab_thumb_url}" style="color:#aaa;" onfocus="if (this.value == '{$lang.lab_thumb_url}'){this.value='http://';this.style.color='#000';}" name="goods_thumb_url"/>-->
               {if $gd > 0}
               <br /><label for="auto_thumb"><input type="checkbox" id="auto_thumb" name="auto_thumb" checked="true" value="1" onclick="handleAutoThumb(this.checked)" />{$lang.auto_thumb}</label>{/if}
-
             </td>
           </tr>
         </table>
@@ -307,45 +314,31 @@
         {/if}
 
         <!-- 鍟嗗搧鐩稿唽 -->
-        <table width="90%" id="gallery-table" class="aaa" style="display:none" align="center">
+        <table width="90%" id="gallery-table" style="display:none" align="center">
           <!-- 鍥剧墖鍒楄〃 -->
           <tr>
-            <td class="up-title">{$lang.lab_picture}</td>
             <td>
-              <div class="upload-ul clearfix">
-                  <input type="hidden" name="img_sn">
-                  <ul class="pic-list">
-                  {foreach from=$img_list item=img key=i}
-                  <li id="gallery_{$img.img_id}" class="diyUploadHover list" data-imgid="{$img.img_id}">
-                    <div class="viewThumb">
-                        <input type="hidden" name="img_url[]">
-                        <p class="diyControl"><span class="diyLeft"><i></i></span><span class="diyCancel" onclick="if (confirm('{$lang.drop_img_confirm}')) dropImg('{$img.img_id}')"><i></i></span><span class="diyRight"><i></i></span></p>
-                      {if $tencent_cos eq '1'}
-                        <img  src="{if $img.thumb_url}{$img.thumb_url}{else}{$img.img_url}{/if}"/>
-                      {else}
-                        <img  src="../{if $img.thumb_url}{$img.thumb_url}{else}{$img.img_url}{/if}"/>
-                      {/if}
-
-                    </div>
-                    <!-- <input type="text" value="{$img.img_desc|escape}" size="15" name="old_img_desc[{$img.img_id}]" placeholder="{$lang.lab_thumb_url}" /><span class="fill-img">{$lang.Preview}</span> -->
-                  </li>
-                  {/foreach}
-              </ul>
-                  <div class="upload-pick list">
-                      <div class="webuploader-container clearfix" id="goodsUpload"></div>
-                  </div>
+              {foreach from=$img_list item=img key=i}
+              <div id="gallery_{$img.img_id}" style="float:left; text-align:center; border: 1px solid #DADADA; margin: 4px; padding:2px;">
+                <a href="javascript:;" onclick="if (confirm('{$lang.drop_img_confirm}')) dropImg('{$img.img_id}')">[-]</a><br />
+                <a href="goods.php?act=show_image&img_url={$img.img_url}" target="_blank">
+                <!-- <img src="../{if $img.thumb_url}{$img.thumb_url}{else}{$img.img_url}{/if}" {if $thumb_width neq 0}width="{$thumb_width}"{/if} {if $thumb_height neq 0}height="{$thumb_height}"{/if} border="0" />
+                 -->
+                <img src="{if $img.thumb_url}{$img.thumb_url}{else}{$img.img_url}{/if}" {if $thumb_width neq 0}width="{$thumb_width}"{/if} {if $thumb_height neq 0}height="{$thumb_height}"{/if} border="0"
+                </a><br />
+                <input type="text" value="{$img.img_desc|escape}" size="15" name="old_img_desc[{$img.img_id}]" />
               </div>
+              {/foreach}
             </td>
           </tr>
           <tr><td>&nbsp;</td></tr>
           <!-- 涓婁紶鍥剧墖 -->
           <tr>
             <td>
-              <!-- <a href="javascript:;" onclick="addImg(this)">[+]</a>
+              <a href="javascript:;" onclick="addImg(this)">[+]</a>
               {$lang.img_desc} <input type="text" name="img_desc[]" size="20" />
               {$lang.img_url} <input type="file" name="img_url[]" />
-              <input type="text" size="40" value="{$lang.img_file}" style="color:#aaa;" onfocus="if (this.value == '{$lang.img_file}'){this.value='http://';this.style.color='#000';}" name="img_file[]"/> -->
-              <!-- <input type="file" name="img_file[]" accept="image/jpg,image/png,image/gif" multiple="multiple" > -->
+              <input type="text" size="40" value="{$lang.img_file}" style="color:#aaa;" onfocus="if (this.value == '{$lang.img_file}'){this.value='http://';this.style.color='#000';}" name="img_file[]"/>
             </td>
           </tr>
         </table>
@@ -467,6 +460,30 @@
           </tr>
         </table>
 
+        <!-- 上传附件 -->
+<!--        <table width="90%" id="upload-table" style="display:none" align="center">-->
+          <!-- 编辑上传的附件 -->
+<!--          <tr>-->
+<!--            <td>-->
+<!--              {foreach from=$file_list item=file key=i}-->
+<!--              <div id="upload_{$file.file_id}" style="float:left; text-align:center; border: 1px solid #DADADA; margin: 4px; padding:2px;">-->
+<!--                <a href="javascript:;" onclick="if (confirm('{$lang.drop_file_confirm}')) dropFile('{$file.file_id}')">[-]</a><br />-->
+<!--                <span>文件名：<a href="{$file.file_url}" title="点击下载" download="{$file.file_url}" >{$file.file_name}</a></span>-->
+<!--              </div>-->
+<!--              {/foreach}-->
+<!--            </td>-->
+<!--          </tr>-->
+<!--          <tr><td>&nbsp;</td></tr>-->
+          <!-- 上传附件 -->
+<!--          <tr>-->
+<!--            <td>-->
+<!--              <a href="javascript:;" onclick="addFile(this)">[+]</a>-->
+<!--              {$lang.img_url} <input type="file" name="file_url[]" />-->
+
+<!--            </td>-->
+<!--          </tr>-->
+        </table>
+
         <div class="button-div">
           <input type="hidden" name="goods_id" value="{$goods.goods_id}" />
           {if $code neq ''}
@@ -481,8 +498,7 @@
 </div>
 <!-- end goods form -->
 {insert_scripts files="validator.js,tab.js"}
-<script src="../admin/js/webuploader.min.js"></script>
-<script src="../admin/js/diyUpload.js"></script>
+
 <script language="JavaScript">
   var goodsId = '{$goods.goods_id}';
   var elements = document.forms['theForm'].elements;
@@ -496,6 +512,9 @@
   onload = function()
   {
       handlePromote(document.forms['theForm'].elements['is_promote'].checked);
+      pintuan(document.forms['theForm'].elements['is_pintuan'].checked);
+
+      handlePromote_ms(document.forms['theForm'].elements['ms_promote'].checked);
 
       if (document.forms['theForm'].elements['auto_thumb'])
       {
@@ -512,7 +531,7 @@
       document.forms['theForm'].reset();
   }
 
-  function validate(goods_id)
+        function validate(goods_id)
   {
       var validator = new Validator('theForm');
       var goods_sn  = document.forms['theForm'].elements['goods_sn'].value;
@@ -551,20 +570,28 @@
       {
          if(validator.passed())
          {
-            if($('#gallery-table').is(':visible')){
-              var sortArr = [];
-              $('.pic-list > li').each(function(){
-                  sortArr.push($(this).attr('data-imgid'));
-              })
-              $('input[name=img_sn]').val(sortArr);
-            }
-            document.forms['theForm'].submit();
+         document.forms['theForm'].submit();
          }
       }
   }
     Ajax.call('goods.php?is_ajax=1&act=check_goods_sn', "goods_sn=" + goods_sn + "&goods_id=" + goods_id, callback, "GET", "JSON");
 }
 
+
+
+        /*获取父div和子div*/
+        var pictures=document.getElementById('pictures');
+        var tppicture=document.getElementById('tppicture');
+
+        /*鼠标移入父div时，显示子div*/
+        pictures.onmouseover=function(){
+          tppicture.style.display='block';
+        };
+
+        /*鼠标移出父div时，显示子div*/
+        pictures.onmouseout=function(){
+          tppicture.style.display='none';
+        };
   /**
    * 鍒囨崲鍟嗗搧绫诲瀷
    */
@@ -735,13 +762,68 @@
       document.forms['theForm'].elements['selbtn1'].disabled = !checked;
       document.forms['theForm'].elements['selbtn2'].disabled = !checked;
   }
+    function handlePromote_ms(checked)
+    {
+      document.forms['theForm'].elements['start_time'].disabled = !checked;
+      document.forms['theForm'].elements['end_time'].disabled = !checked;
+      document.forms['theForm'].elements['spike_count'].disabled = !checked;
+      document.forms['theForm'].elements['spike_sum'].disabled = !checked;
+      document.forms['theForm'].elements['selbtn1'].disabled = !checked;
+      document.forms['theForm'].elements['selbtn2'].disabled = !checked;
+    }
+
+    //拼团和秒杀不能同时开启
+    //   document.getElementById('is_pintuan').onclick=function () {
+    //     if (document.getElementById('is_pintuan').checked == true){
+    //       document.getElementById('is_pintuan').disabled = false;
+    //       document.getElementById('ms_promote').checked = false;
+    //       document.getElementById('ms_promote').disabled = true;
+    //     }
+    //     else{
+    //       document.getElementById('ms_promote').checked = false;
+    //       document.getElementById('ms_promote').disabled = false;
+    //     }
+    //   }
+    //
+    //   document.getElementById('ms_promote').onclick=function () {
+    //     if (document.getElementById('ms_promote').checked == true){
+    //       // alert('拼团和秒杀只能开启一个');
+    //       document.getElementById('is_pintuan').checked = false;
+    //       document.getElementById('is_pintuan').disabled = true;
+    //     }
+    //     else{
+    //       document.getElementById('is_pintuan').checked = false;
+    //       document.getElementById('is_pintuan').disabled = false;
+    //     }
+    //   }
+  function check() {
+    if (document.getElementById('is_pintuan').checked == true){
+      document.getElementById('ms_promote').checked = false;
+      document.getElementById('ms_promote').disabled = true;
+    }else if (document.getElementById('is_pintuan').checked == false && document.getElementById('ms_promote').checked == false){
+        // alert('111');
+        document.getElementById('ms_promote').checked = false;
+        document.getElementById('ms_promote').disabled = false;
+      }
+    if (document.getElementById('ms_promote').checked == true){
+      // alert('拼团和秒杀只能开启一个');
+      document.getElementById('is_pintuan').checked = false;
+      document.getElementById('is_pintuan').disabled = true;
+    }else if (document.getElementById('ms_promote').checked == false && document.getElementById('is_pintuan').checked == false){
+      document.getElementById('is_pintuan').checked = false;
+      document.getElementById('is_pintuan').disabled = false;
+    }
+  }
+
+  function pintuan(checked)
+  {
+    document.forms['theForm'].elements['pt_price'].disabled = !checked;
+  }
 
   function handleAutoThumb(checked)
   {
-    if(document.querySelector('.goods_thumb')){
-      document.forms['theForm'].elements['goods_thumbs'].disabled = checked;
+      document.forms['theForm'].elements['goods_thumb'].disabled = checked;
       document.forms['theForm'].elements['goods_thumb_url'].disabled = checked;
-    }
   }
 
   /**
@@ -1030,6 +1112,19 @@
   }
 
   /**
+   * 新增上传文件
+   */
+  // function addFile(obj)
+  // {
+  //   var src  = obj.parentNode.parentNode;
+  //   var idx  = rowindex(src);
+  //   var tbl  = document.getElementById('upload-table');
+  //   var row  = tbl.insertRow(idx + 1);
+  //   var cell = row.insertCell(-1);
+  //   cell.innerHTML = src.cells[0].innerHTML.replace(/(.*)(addFile)(.*)(\[)(\+)/i, "$1removeFile$3$4-");
+  // }
+
+  /**
    * 鍒犻櫎鍥剧墖涓婁紶
    */
   function removeImg(obj)
@@ -1041,11 +1136,30 @@
   }
 
   /**
+   * 删除上传的文件
+   */
+  // function removeFile(obj)
+  // {
+  //   var row = rowindex(obj.parentNode.parentNode);
+  //   var tbl = document.getElementById('upload-table');
+  //
+  //   tbl.deleteRow(row);
+  // }
+
+  /**
    * 鍒犻櫎鍥剧墖
    */
   function dropImg(imgId)
   {
     Ajax.call('goods.php?is_ajax=1&act=drop_image', "img_id="+imgId, dropImgResponse, "GET", "JSON");
+  }
+
+  /**
+   * 删除原有的附件
+   */
+  function dropFile(fileId)
+  {
+    Ajax.call('goods.php?is_ajax=1&act=drop_upload_file', "file_id="+fileId, dropFileResponse, "GET", "JSON");
   }
 
   function dropImgResponse(result)
@@ -1054,6 +1168,14 @@
       {
           document.getElementById('gallery_' + result.content).style.display = 'none';
       }
+  }
+
+  function dropFileResponse(result)
+  {
+    if (result.error == 0)
+    {
+      document.getElementById('upload_' + result.content).style.display = 'none';
+    }
   }
 
   /**
@@ -1173,104 +1295,6 @@
       }
     }
   }
-
-
-  //上传图片
-  $(function(){
-    // 主图上传
-    $(".up-ipt").change(function(e) {
-          var file = this.files[0];
-              imgUrl = window.URL.createObjectURL(file),
-              imgNode = '<img src="'+ imgUrl +'"/>',
-              tips = '{$lang.tip_imgSize}';
-          if(file.size > 2 * 1024 * 1024){
-            alert(tips)
-            return
-          }
-          $(this).parent().find('.img-inner').html(imgNode);
-    });
-
-    //相册上传
-    var maxUpNum = 10,
-        imgId = [];
-    lab_thumb_url = '{$lang.lab_thumb_url}',
-    Preview = '{$lang.Preview}',
-    tip_upload_completed = '{$lang.tip_upload_completed}',
-    tip_unknow_error = '{$lang.tip_unknow_error}',
-    tip_fileType_error = '{$lang.tip_fileType_error}',
-    tip_allSize_exceedslimit = '{$lang.tip_allSize_exceedslimit}',
-    tip_fileSize_exceedslimit = '{$lang.tip_fileSize_exceedslimit}',
-    tip_fileNumer_exceedslimit = '{$lang.tip_fileNumer_exceedslimit}',
-    tip_filehaschoose = '{$lang.tip_filehaschoose}',
-    tip_upload_error = '{$lang.tip_upload_error}',
-    tip_file = '{$lang.tip_file}',
-    tip_errocode = '{$lang.tip_errocode}',
-    tip_upload_component = '{$lang.tip_upload_component}',
-    tip_param_error = '{$lang.tip_param_error}';
-    delete(Object.prototype.toJSONString);
-    $('#goodsUpload').diyUpload({
-      url:'goods.php?act=ajax_upload_image',
-      success:function( data ) {
-        var sn = data.content.img_id;
-        imgId.push(sn);
-        $('input[name=img_sn]').val(imgId);
-      },
-      error:function( err ) { },
-      buttonText : '',
-      accept: {
-        title: "Images",
-        extensions: 'gif,jpg,jpeg,bmp,png'
-      },
-      formData: {
-        goods_id: goodsId
-      },
-      thumb:{
-        width:1000,
-        height:1000,
-        quality:100,
-        allowMagnify:false,
-        crop:false,
-        type:"image/jpeg"
-      },
-      compress:null,
-      fileNumLimit:maxUpNum,//最大上传的文件数量,
-      fileSizeLimit:100000 * 1024,//总文件大小
-      fileSingleSizeLimit:10000 * 1024 //单个文件大小(单位字节)
-    });
-    //左移事件;
-    function leftLi ($leftli, $li) {
-        $li.insertBefore($leftli);
-    }
-
-    //右移事件;
-    function rightLi ($rightli, $li) {
-        $li.insertAfter($rightli);
-    }
-    //绑定左移事件;
-    var uploadUl = $('.upload-ul');
-      uploadUl.find('.diyLeft').on('click',function(){
-          leftLi($(this).parents('.diyUploadHover').prev(), $(this).parents('.diyUploadHover'));
-      });
-
-      //绑定右移事件;
-      uploadUl.find('.diyRight').on('click',function(){
-          rightLi($(this).parents('.diyUploadHover').next(), $(this).parents('.diyUploadHover') );
-      });
-     //图片相册外链图片加入预览
-     $('.upload-ul .list').on('click','.fill-img',function(){
-        var imgsrc = $.trim($(this).prev('input').val()),
-            $parent = $(this).parent();
-        if(imgsrc != ''){
-          $parent.find('img').attr('src',imgsrc);
-          $parent.find('.viewThumb > input').val(imgsrc);
-        }
-
-     })
-  });
-
-
   {/literal}
-
-
 </script>
 {include file="pagefooter.htm"}

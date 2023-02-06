@@ -133,7 +133,7 @@ function default_user_agent()
     static $defaultAgent = '';
 
     if (!$defaultAgent) {
-        $defaultAgent = 'Ecshop';
+        $defaultAgent =  'ecshop/4.13;tencentcloud_ecshop_plugin_cos/1.0.1;cos-php-sdk-v5/2.0.8';
     }
 
     return $defaultAgent;

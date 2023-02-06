@@ -3,7 +3,7 @@
 /**
  * ECSHOP 管理中心共用语言文件
  * ============================================================================
- * * 版权所有 2005-2018 上海商派网络科技有限公司，并保留所有权利。
+ * * 版权所有 2005-2022 商派软件有限公司，并保留所有权利。
  * 网站地址: http://www.ecshop.com；
  * ----------------------------------------------------------------------------
  * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
@@ -11,11 +11,11 @@
  * ============================================================================
  * $Author: liubo $
  * $Id: common.php 17217 2011-01-19 06:29:08Z liubo $
-*/
+ */
 
 $_LANG['app_name'] = 'ECSHOP';
 $_LANG['cp_home'] = 'ECSHOP 管理中心';
-$_LANG['copyright'] = '版权所有 &copy; 2005-'. date('Y') .' 上海商派软件有限公司，并保留所有权利。';
+$_LANG['copyright'] = '版权所有 &copy; 2005-' . date('Y') . ' 商派软件有限公司，并保留所有权利。';
 $_LANG['query_info'] = '共执行 %d 个查询，用时 %s 秒';
 $_LANG['memory_info'] = '，内存占用 %0.3f MB';
 $_LANG['gzip_enabled'] = '，Gzip 已启用';
@@ -72,7 +72,7 @@ $_LANG['button_search'] = ' 搜索 ';
 $_LANG['advanced_search'] = '高级搜索';
 
 $_LANG['priv_error'] = '对不起,您没有执行此项操作的权限!';
-$_LANG['drop_confirm'] = '您确认要删除这条记录吗?';
+$_LANG['drop_confirm'] = '您确定要删除这条记录吗?';
 $_LANG['form_notice'] = '点击此处查看提示信息';
 $_LANG['upfile_type_error'] = '上传文件的类型不正确!';
 $_LANG['upfile_error'] = '上传文件失败!';
@@ -151,7 +151,7 @@ $_LANG['19_tencent_plugins'] = '腾讯云设置';
 
 /* 商品管理 */
 $_LANG['01_goods_list'] = '商品列表';
-$_LANG['02_goods_add'] = '添加新商品';
+$_LANG['02_goods_add'] = '添加商品';
 $_LANG['03_category_list'] = '商品分类';
 $_LANG['04_category_add'] = '添加分类';
 $_LANG['05_comment_manage'] = '用户评论';
@@ -178,18 +178,19 @@ $_LANG['52_virtual_card_change'] = '更改加密串';
 $_LANG['goods_auto'] = '商品自动上下架';
 $_LANG['article_auto'] = '文章自动发布';
 $_LANG['navigator'] = '自定义导航栏';
+$_LANG['user_hitCounts'] = '商品浏览统计';
 
 /* 促销管理 */
 $_LANG['02_snatch_list'] = '夺宝奇兵';
 $_LANG['snatch_add'] = '添加夺宝奇兵';
-$_LANG['04_bonustype_list'] = '红包类型';
+$_LANG['04_bonustype_list'] = '红包管理';
 $_LANG['bonustype_add'] = '添加红包类型';
 $_LANG['05_bonus_list'] = '线下红包';
 $_LANG['bonus_add'] = '添加会员红包';
 $_LANG['06_pack_list'] = '商品包装';
 $_LANG['07_card_list'] = '祝福贺卡';
-$_LANG['pack_add'] = '添加新包装';
-$_LANG['card_add'] = '添加新贺卡';
+$_LANG['pack_add'] = '添加包装';
+$_LANG['card_add'] = '添加贺卡';
 $_LANG['08_group_buy'] = '团购活动';
 $_LANG['09_topic'] = '专题管理';
 $_LANG['topic_add'] = '添加专题';
@@ -197,7 +198,7 @@ $_LANG['topic_list'] = '专题列表';
 $_LANG['10_auction'] = '拍卖活动';
 $_LANG['12_favourable'] = '优惠活动';
 $_LANG['13_wholesale'] = '批发管理';
-$_LANG['ebao_commend'] = '易宝推荐';
+//$_LANG['ebao_commend'] = '易宝推荐';
 $_LANG['14_package_list'] = '超值礼包';
 $_LANG['package_add'] = '添加超值礼包';
 
@@ -210,6 +211,9 @@ $_LANG['06_undispose_booking'] = '缺货登记';
 $_LANG['08_add_order'] = '添加订单';
 $_LANG['09_delivery_order'] = '发货单列表';
 $_LANG['10_back_order'] = '退货单列表';
+//$_LANG['11_return_order'] = '退换货列表';
+//$_LANG['12_time_order'] = '移动端配送时间';
+//$_LANG['13_order_delivery'] = '移动端配送方式';
 
 /* 广告管理 */
 $_LANG['ad_position'] = '广告位置';
@@ -217,7 +221,7 @@ $_LANG['ad_list'] = '广告列表';
 
 /* 报表统计 */
 $_LANG['flow_stats'] = '流量分析';
-$_LANG['searchengine_stats'] = '搜索引擎';
+//$_LANG['searchengine_stats'] = '搜索引擎';
 $_LANG['report_order'] = '订单统计';
 $_LANG['report_sell'] = '销售概况';
 $_LANG['sell_stats'] = '销售排行';
@@ -231,7 +235,7 @@ $_LANG['z_clicks_stats'] = '站外投放JS';
 $_LANG['02_articlecat_list'] = '文章分类';
 $_LANG['articlecat_add'] = '添加文章分类';
 $_LANG['03_article_list'] = '文章列表';
-$_LANG['article_add'] = '添加新文章';
+$_LANG['article_add'] = '添加文章';
 $_LANG['shop_article'] = '网店文章';
 $_LANG['shop_info'] = '网店信息';
 $_LANG['shop_help'] = '网店帮助';
@@ -242,8 +246,10 @@ $_LANG['08_unreply_msg'] = '会员留言';
 $_LANG['03_users_list'] = '会员列表';
 $_LANG['04_users_add'] = '添加会员';
 $_LANG['05_user_rank_list'] = '会员等级';
-$_LANG['06_list_integrate'] = '会员整合';
+//$_LANG['06_list_integrate'] = '会员整合';
 $_LANG['09_user_account'] = '充值和提现申请';
+$_LANG['11_user_cancellation'] = 'APP账号注销申请';
+$_LANG['12_user_cancellation_log'] = 'APP账号注销日志';
 $_LANG['10_user_account_manage'] = '资金管理';
 
 /* 权限管理 */
@@ -260,7 +266,7 @@ $_LANG['suppliers_list'] = '供货商列表';
 /* 系统设置 */
 $_LANG['01_shop_config'] = '商店设置';
 // $_LANG['shop_authorized'] = '授权证书';
-$_LANG['shp_webcollect'] = '网罗天下';
+//$_LANG['shp_webcollect'] = '网罗天下';
 $_LANG['02_payment_list'] = '支付方式';
 $_LANG['03_shipping_list'] = '配送方式';
 $_LANG['04_mail_settings'] = '邮件服务器设置';
@@ -271,8 +277,8 @@ $_LANG['shipping_area_list'] = '配送区域';
 $_LANG['sitemap'] = '站点地图';
 $_LANG['check_file_priv'] = '文件权限检测';
 $_LANG['captcha_manage'] = '验证码管理';
-$_LANG['fckfile_manage'] = 'Fck上传文件管理';
-$_LANG['ucenter_setup'] = 'UCenter设置';
+//$_LANG['fckfile_manage'] = 'Fck上传文件管理';
+//$_LANG['ucenter_setup'] = 'UCenter设置';
 $_LANG['file_check'] = '文件校验';
 $_LANG['021_reg_fields'] = '会员注册项设置';
 
@@ -297,12 +303,12 @@ $_LANG['03_sms_send'] = '发送短信';
 $_LANG['04_sms_charge'] = '账户充值';
 $_LANG['05_sms_send_history'] = '发送记录';
 $_LANG['06_sms_charge_history'] = '充值记录';
-
-
-
+$_LANG['07_sms_send_vcode'] = '验证码记录';
+//$_LANG['08_sms_send_vcode'] = '短信设置';
 
 $_LANG['affiliate'] = '推荐设置';
 $_LANG['affiliate_ck'] = '分成管理';
+$_LANG['user_recommend'] = "分成用户";
 $_LANG['flashplay'] = '首页主广告管理';
 $_LANG['search_log'] = '搜索关键字';
 $_LANG['email_list'] = '邮件订阅管理';
@@ -311,9 +317,10 @@ $_LANG['attention_list'] = '关注管理';
 $_LANG['view_sendlist'] = '邮件队列管理';
 
 /* 积分兑换管理 */
-$_LANG['15_exchange_goods'] = '积分商城商品';
+$_LANG['15_exchange_goods'] = '积分商城';
 $_LANG['15_exchange_goods_list'] = '积分商城商品列表';
-$_LANG['exchange_goods_add'] = '添加新商品';
+$_LANG['exchange_goods_add'] = '添加积分商品';
+
 
 /* cls_image类的语言项 */
 $_LANG['directory_readonly'] = '目录 % 不存在或不可写';
@@ -326,7 +333,7 @@ $_LANG['creating_failure'] = '创建图片失败';
 $_LANG['writting_failure'] = '图片写入失败';
 $_LANG['empty_watermark'] = '水印文件参数不能为空';
 $_LANG['missing_watermark'] = '找不到水印文件%s';
-$_LANG['create_watermark_res'] = '创建水印图片资源失败。水印图片类型为%s';
+$_LANG['create_watermark_res'] = '创建水印图片资源失败，水印图片类型为%s';
 $_LANG['create_origin_image_res'] = '创建原始图片资源失败，原始图片类型%s';
 $_LANG['invalid_image_type'] = '无法识别水印图片 %s ';
 $_LANG['file_unavailable'] = '文件 %s 不存在或不可读';
@@ -351,8 +358,6 @@ $_LANG['brand_name_exist'] = '已存在相同的品牌名称!';
 $_LANG['alipay_login'] = '<a href="https://www.alipay.com/user/login.htm?goto=https%3A%2F%2Fwww.alipay.com%2Fhimalayas%2Fpracticality_profile_edit.htm%3Fmarket_type%3Dfrom_agent_contract%26customer_external_id%3D%2BC4335319945672464113" target="_blank">立即免费申请支付接口权限</a>';
 $_LANG['alipay_look'] = '<a href=\"https://www.alipay.com/himalayas/practicality.htm\" target=\"_blank\">请申请成功后登录支付宝账户查看</a>';
 
-
-
 $_LANG['04_sms_sign'] = '短信签名';
 
 /* 云服务中心 */
@@ -360,18 +365,36 @@ $_LANG['certificate'] = '授权绑定';
 $_LANG['service_market'] = '服务市场';
 $_LANG['sms_resource'] = '短信平台';
 /*云起物流*/
-$_LANG['logistic_tracking'] = '云起物流';
+//$_LANG['logistic_tracking'] = '云起物流';
 
-/* 移动版全民分销开通引导页 */
-$_LANG['banner_mobile'] = '移动端广告配置';
+/* 移动版管理 */
+$_LANG['banner_mobile'] = '首页轮播图设置';
 $_LANG['lead'] = 'H5店铺二维码';
 $_LANG['mobile_setting'] = 'APP应用配置';
 $_LANG['h5_setting'] = 'H5应用配置';
 $_LANG['wxa_setting'] = '小程序应用配置';
 $_LANG['leancloud'] = 'APP推送管理';
+$_LANG['mobile_img'] = 'APP图片设置';
+$_LANG['app_update'] = 'App更新';
+$_LANG['end_time'] = '移动端截单设置';
+$_LANG['prompt_image'] = '首页弹窗设置';
+$_LANG['kefu'] = '移动端客服电话';
+$_LANG['download'] = 'APP下载地址设置';
+$_LANG['logo_setting'] = '首页Logo设置';
+$_LANG['logo_other'] = '登录页Logo设置';
+$_LANG['keywords'] = '热门搜索设置';
+$_LANG['pay_dispose'] = '移动端支付设置';
+$_LANG['logistics'] = '物流查询设置';
+$_LANG['index_imgae'] = '首页广告设置';
+$_LANG['default_image'] = '商品默认图片';
+$_LANG['copyright_modify'] = '移动端版权设置';
+$_LANG['live_settings'] = '小程序直播设置';
+$_LANG['privacy_rights'] = '小程序隐私权限';
+$_LANG['apple_login'] = '苹果APP登录';
+$_LANG['my_subordinates'] = '我的下级开关';
 
 /* 腾讯插件管理*/
 $_LANG['1tencent_center'] = '公共密钥配置';
 $_LANG['2tencent_captcha'] = '验证码配置';
 $_LANG['3tencent_cos'] = '对象存储配置';
-?>
+

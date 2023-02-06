@@ -3,7 +3,7 @@
 /**
  * ECSHOP 前台公用函数库
  * ============================================================================
- * * 版权所有 2005-2018 上海商派网络科技有限公司，并保留所有权利。
+ * * 版权所有 2005-2022 商派软件有限公司，并保留所有权利。
  * 网站地址: http://www.ecshop.com；
  * ----------------------------------------------------------------------------
  * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
@@ -54,7 +54,7 @@ function update_user_info()
         {
             $sql="SELECT special_rank from ".$GLOBALS['ecs']->table('user_rank')."where rank_id='$row[user_rank]'";
             if($GLOBALS['db']->getOne($sql)==='0' || $GLOBALS['db']->getOne($sql)===null)
-            {   
+            {
                 $sql="update ".$GLOBALS['ecs']->table('users')."set user_rank='0' where user_id='$_SESSION[user_id]'";
                 $GLOBALS['db']->query($sql);
                 $row['user_rank']=0;
@@ -93,6 +93,8 @@ function update_user_info()
             }
         }
     }
+    $sql = "UPDATE " . $GLOBALS['ecs']->table('cart') . " SET user_id = '" . $_SESSION['user_id'] . "' WHERE session_id='" . SESS_ID . "'";
+    $GLOBALS['db']->query($sql); //根据session_id 同步user_id
 
     /* 更新登录时间，登录次数及登录ip */
     $sql = "UPDATE " .$GLOBALS['ecs']->table('users'). " SET".
@@ -1144,12 +1146,11 @@ function visit_stats()
     }
 
     $sql = 'INSERT INTO ' . $GLOBALS['ecs']->table('stats') . ' ( ' .
-                '`ip_address`, `visit_times`, `browser`, `system`, `language`, `area`, ' .
-                '`referer_domain`, `referer_path`, `access_url`, `access_time`' .
+                'ip_address, visit_times, browser, system, language, area, ' .
+                'referer_domain, referer_path, access_url, access_time' .
             ') VALUES (' .
                 "'$ip', '$visit_times', '$browser', '$os', '$lang', '$area', ".
                 "'" . addslashes($domain) ."', '" . addslashes($path) ."', '" . htmlspecialchars(addslashes(PHP_SELF)) ."', '" . $time . "')";
-
     $GLOBALS['db']->query($sql);
 }
 
@@ -1540,11 +1541,6 @@ function parse_rate_value($str, &$operate)
  */
 function recalculate_price()
 {
-    $where = "session_id = '" . SESS_ID . "'";
-    if ($_SESSION['user_id'])
-    {
-        $where = "user_id = '".intval($_SESSION['user_id'])."'";
-    }
     /* 取得有可能改变价格的商品：除配件和赠品之外的商品 */
     $sql = 'SELECT c.rec_id, c.goods_id, c.goods_attr_id, g.promote_price, g.promote_start_date, c.goods_number,'.
                 "g.promote_end_date, IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS member_price ".
@@ -1552,7 +1548,7 @@ function recalculate_price()
             'LEFT JOIN ' . $GLOBALS['ecs']->table('goods') . ' AS g ON g.goods_id = c.goods_id '.
             "LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
                     "ON mp.goods_id = g.goods_id AND mp.user_rank = '" . $_SESSION['user_rank'] . "' ".
-            "WHERE ". $where ." AND c.parent_id = 0 AND c.is_gift = 0 AND c.goods_id > 0 " .
+            "WHERE session_id = '" .SESS_ID. "' AND c.parent_id = 0 AND c.is_gift = 0 AND c.goods_id > 0 " .
             "AND c.rec_type = '" . CART_GENERAL_GOODS . "' AND c.extension_code <> 'package_buy'";
 
             $res = $GLOBALS['db']->getAll($sql);
@@ -1566,14 +1562,14 @@ function recalculate_price()
 
 
         $goods_sql = "UPDATE " .$GLOBALS['ecs']->table('cart'). " SET goods_price = '$goods_price' ".
-                     "WHERE goods_id = '" . $row['goods_id'] . "' AND ". $where ." AND rec_id = '" . $row['rec_id'] . "'";
+                     "WHERE goods_id = '" . $row['goods_id'] . "' AND session_id = '" . SESS_ID . "' AND rec_id = '" . $row['rec_id'] . "'";
 
         $GLOBALS['db']->query($goods_sql);
     }
 
     /* 删除赠品，重新选择 */
     $GLOBALS['db']->query('DELETE FROM ' . $GLOBALS['ecs']->table('cart') .
-        " WHERE ". $where ." AND is_gift > 0");
+        " WHERE session_id = '" . SESS_ID . "' AND is_gift > 0");
 }
 
 /**
@@ -1667,6 +1663,9 @@ function assign_template($ctype = '', $catlist = array())
     $smarty->assign('category_list', cat_list(0, 0, true,  2, false));
     $smarty->assign('catalog_list',  cat_list(0, 0, false, 1, false));
     $smarty->assign('navigator_list',        get_navigator($ctype, $catlist));  //自定义导航栏
+    $sql = "select value from  ecs_shop_config  where  code = 'shop_logo' ";
+    $shop_logo = $GLOBALS['db']->getRow($sql);
+    $smarty->assign('shop_logo',        $shop_logo);  //店铺logo
 
     if (!empty($GLOBALS['_CFG']['search_keywords']))
     {
@@ -1945,7 +1944,7 @@ function get_library_number($library, $template = null)
         }
         $lib = '/library/' . $library . '.lbi';
 
-        $num = isset($static_page_libs[$template][$lib]) ? $static_page_libs[$template][$lib] :  3;
+        $num = isset($static_page_libs[$template][$lib]) ? 7:  4;
     }
 
     return $num;
@@ -1959,7 +1958,7 @@ function get_library_number($library, $template = null)
 function get_navigator($ctype = '', $catlist = array())
 {
     $sql = 'SELECT * FROM '. $GLOBALS['ecs']->table('nav') . '
-            WHERE ifshow = \'1\' ORDER BY type, vieworder';
+            WHERE ifshow = \'1\' AND show_in_nav_pc = \'1\' ORDER BY type, vieworder';
     $res = $GLOBALS['db']->query($sql);
 
     $cur_url = substr(strrchr($_SERVER['REQUEST_URI'],'/'),1);
@@ -2049,8 +2048,8 @@ function license_info()
             $host = $_SERVER['HTTP_HOST'];
         }
         $url_domain=url_domain();
-        $host = defined('FORCE_SSL_LOGIN') ? 'https://' : 'http://' . $host .$url_domain ;
-        $license = '<a href="http://www.ecshop.com/license.php?product=ecshop_b2c&url=' . urlencode($host) . '" target="_blank"
+        $host = 'http://' . $host .$url_domain ;
+        $license = '<a href="https://www.ecshop.com/license.php?product=ecshop_b2c&url=' . urlencode($host) . '" target="_blank"
 >&nbsp;&nbsp;Licensed</a>';
         return $license;
     }
@@ -2087,7 +2086,7 @@ function update_cart_offline(){
     $sql = "SELECT * ".
             " FROM " .$GLOBALS['ecs']->table('cart').
             " WHERE session_id = '". SESS_ID ."' AND user_id=0";
-    $offline_carts = $GLOBALS['db']->getAll($sql); 
+    $offline_carts = $GLOBALS['db']->getAll($sql);
 
     if( !$offline_carts ){ //无需合并
         return true;
@@ -2097,7 +2096,7 @@ function update_cart_offline(){
     $sql = "SELECT * ".
             " FROM " .$GLOBALS['ecs']->table('cart').
             " WHERE user_id = '". $user_id ."'";
-    $online_carts = $GLOBALS['db']->getAll($sql); 
+    $online_carts = $GLOBALS['db']->getAll($sql);
 
     if( !$online_carts ){ //离线转在线
         $sql = "UPDATE " . $GLOBALS['ecs']->table('cart') . " SET user_id = '$user_id' WHERE session_id = '" .SESS_ID."'";
@@ -2111,7 +2110,7 @@ function update_cart_offline(){
         $key = $offval['goods_id'].'_'.$offval['product_id'];
         $offcart[$key] = $offval;
     }
-    
+
     foreach($online_carts as $onkey=>$onval){
         if( !$onval['goods_id'] || !$onval['goods_number'] ) continue;
         $key = $onval['goods_id'].'_'.$onval['product_id'];
@@ -2135,5 +2134,6 @@ function update_cart_offline(){
 
     return true;
 }
+
 
 ?>

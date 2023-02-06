@@ -7,38 +7,39 @@
 <tr>
   <th colspan="2">{$lang.captcha_setting}</th>
 </tr>
-  <tr>
-    <td>
-      <strong>{$lang.captcha_type}</strong><br />
-      {$lang.captcha_type_note}
-    </td>
-    <td><input type="radio" name="captcha_type" value="1" {$captcha.default} />{$lang.default_type}<input type="radio"  name="captcha_type" value="2" {$captcha.tencent} />{$lang.tencent_type}</td>
-  </tr>
 <tr>
-  <td width="60%" >
-  <strong>{$lang.captcha_turn_on}</strong><br />
-  {$lang.turn_on_note}<br />
-    {if $captcha.default neq ""}
-    <img src="../captcha.php?{$rand}" alt="captcha" style="vertical-align: middle;cursor: pointer;" onClick="this.src='../captcha.php?'+Math.random()" />
-    {/if}
-    {if $captcha.tencent neq ""}
-    <div>
-      <input type="button" name="codeVerifyButton" id="codeVerifyButton" class="button" onclick="onClickCode()" value="{$lang.captcha_machine_test}" style="width: 20%;margin-bottom: 16px;height:40px;">
-      <input type="button" id="codePassButton" disabled="disabled" style="background-color: green;color: white;width: 20%;margin-bottom: 16px;height:40px" value="{$lang.captcha_machine_test_pass}"  >
-      <input type="hidden" id="codeVerifyTicket" name="codeVerifyTicket" value="">
-      <input type="hidden" id="codeVerifyRandstr" name="codeVerifyRandstr" value="">
-      <input type="hidden" id="codeVerifyAppid" name="codeVerifyRandstr" value="{$captcha.captcha_app_id}">
-      <input type="hidden" id="codeVerifyFlag" name="codeVerifyFlag" value="">
-      <br>
-      <span id="captcha_machine_test_fail" style="color: red">
+  <td>
+    <strong>{$lang.captcha_type}</strong><br />
+    {$lang.captcha_type_note}
+  </td>
+  <td><input type="radio" name="captcha_type" value="1" {$captcha.default} />{$lang.default_type}<input type="radio"  name="captcha_type" value="2" {$captcha.tencent} />{$lang.tencent_type}</td>
+</tr>
+  <tr>
+    //
+    <td width="60%" >
+      <strong>{$lang.captcha_turn_on}</strong><br />
+      {$lang.turn_on_note}<br />
+      //cha
+      {if $captcha.default neq ""}
+      <img src="../captcha.php?{$rand}" alt="captcha" style="vertical-align: middle;cursor: pointer;" onClick="this.src='../captcha.php?'+Math.random()" />
+      {/if}
+      {if $captcha.tencent neq ""}
+      <div>
+        <input type="button" name="codeVerifyButton" id="codeVerifyButton" class="button" onclick="onClickCode()" value="{$lang.captcha_machine_test}" style="width: 20%;margin-bottom: 16px;height:40px;">
+        <input type="button" id="codePassButton" disabled="disabled" style="background-color: green;color: white;width: 20%;margin-bottom: 16px;height:40px" value="{$lang.captcha_machine_test_pass}"  >
+        <input type="hidden" id="codeVerifyTicket" name="codeVerifyTicket" value="">
+        <input type="hidden" id="codeVerifyRandstr" name="codeVerifyRandstr" value="">
+        <input type="hidden" id="codeVerifyAppid" name="codeVerifyRandstr" value="{$captcha.captcha_app_id}">
+        <input type="hidden" id="codeVerifyFlag" name="codeVerifyFlag" value="">
+        <br>
+        <span id="captcha_machine_test_fail" style="color: red">
         {$lang.captcha_machine_test_fail}
       </span>
 
-    <div/>
-    <a href="tencent_captcha.php?act=list_edit">{$lang.open_captcha_config}</a>
-    {/if}
-
-  </td>
+        <div/>
+        <a href="tencent_captcha.php?act=list_edit">{$lang.open_captcha_config}</a>
+        {/if}
+    </td>
   <td>
   <input type="checkbox" name="captcha_register" value="1" {$captcha.register} />{$lang.captcha_register}<br />
   <input type="checkbox" name="captcha_login" value="2" {$captcha.login} />{$lang.captcha_login}<br />
@@ -110,7 +111,6 @@ function validate()
 
   return true;
 }
-
 //屏蔽通过按钮
 
 document.getElementById('codePassButton').hidden = true;
@@ -154,8 +154,12 @@ function onClickCode() {
   captcha.show();
 
 }
+//
 //-->
 </script>
 {/literal}
+//cha
 {insert_scripts files="../js/TCaptcha.js"}
+//
 {include file="pagefooter.htm"}
+

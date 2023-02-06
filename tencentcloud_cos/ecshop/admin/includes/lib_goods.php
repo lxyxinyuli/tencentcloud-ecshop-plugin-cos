@@ -3,7 +3,7 @@
 /**
  * ECSHOP 管理中心商品相关函数
  * ============================================================================
- * * 版权所有 2005-2018 上海商派网络科技有限公司，并保留所有权利。
+ * * 版权所有 2005-2022 商派软件有限公司，并保留所有权利。
  * 网站地址: http://www.ecshop.com；
  * ----------------------------------------------------------------------------
  * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
@@ -294,7 +294,7 @@ function handle_goods_article($goods_id)
  */
 function handle_gallery_image($goods_id, $image_files, $image_descs, $image_urls)
 {
-    /* 上传到腾讯云存储 */
+    /* 上传到腾讯云存储+ */
     $cos_options = get_cos_options();
     if(is_cos_enable())
     {
@@ -375,13 +375,13 @@ function handle_gallery_image($goods_id, $image_files, $image_descs, $image_urls
                 $GLOBALS['db']->query("UPDATE " . $GLOBALS['ecs']->table('goods_gallery') . " SET img_original='' WHERE `goods_id`='{$goods_id}'");
                 @unlink('../' . $img_original);
             }
-            /* 上传到腾讯云存储 */
+            /* 上传到腾讯云存储+ */
             if(is_cos_enable())
             {
-               array_push($cos_file_path, $img_url, $thumb_url, $img_original); // 数组上传
+                array_push($cos_file_path, $img_url, $thumb_url, $img_original); // 数组上传
             }
         }
-        elseif (!empty($image_urls[$key]) && ($image_urls[$key] != $GLOBALS['_LANG']['img_file']) && ($image_urls[$key] != 'http://' || $image_urls[$key] != 'https://') && copy(trim($image_urls[$key]), ROOT_PATH . 'temp/' . basename($image_urls[$key])))
+        elseif (!empty($image_urls[$key]) && ($image_urls[$key] != $GLOBALS['_LANG']['img_file']) && ($image_urls[$key] != 'http://') && copy(trim($image_urls[$key]), ROOT_PATH . 'temp/' . basename($image_urls[$key])))
         {
             $image_url = trim($image_urls[$key]);
 
@@ -645,7 +645,7 @@ function get_attr_list($cat_id, $goods_id = 0)
             "LEFT JOIN " .$GLOBALS['ecs']->table('goods_attr'). " AS v ".
             "ON v.attr_id = a.attr_id AND v.goods_id = '$goods_id' ".
             "WHERE a.cat_id = " . intval($cat_id) ." OR a.cat_id = 0 ".
-            "ORDER BY a.sort_order, a.attr_type, a.attr_id, v.attr_price, v.goods_attr_id";
+            "ORDER BY v.goods_attr_id, a.sort_order, a.attr_type, a.attr_id, v.attr_price ";
 
     $row = $GLOBALS['db']->GetAll($sql);
 
@@ -932,7 +932,6 @@ function goods_list($is_delete, $real_goods=1, $conditions = '')
                     " (promote_price > 0 AND promote_start_date <= '$today' AND promote_end_date >= '$today') AS is_promote ".
                     " FROM " . $GLOBALS['ecs']->table('goods') . " AS g WHERE is_delete='$is_delete' $where" .
                     " ORDER BY $filter[sort_by] $filter[sort_order] ".
-                    " ,goods_id DESC ".
                     " LIMIT " . $filter['start'] . ",$filter[page_size]";
 
         $filter['keyword'] = stripslashes($filter['keyword']);
@@ -1128,10 +1127,11 @@ function product_list($goods_id, $conditions = '')
         $_goods_attr_array = explode('|', $value['goods_attr']);
         if (is_array($_goods_attr_array))
         {
-            $_temp = array();
+            $_temp = [];
             foreach ($_goods_attr_array as $_goods_attr_value)
             {
                  $_temp[] = $goods_attr[$_goods_attr_value];
+                 //$_temp= $goods_attr[$_goods_attr_value];
             }
             $row[$key]['goods_attr'] = $_temp;
         }
@@ -1331,21 +1331,21 @@ function reformat_image_name($type, $goods_id, $source_img, $position='')
     }
     if ($position == 'source')
     {
-        if (move_image_file(ROOT_PATH.$source_img, ROOT_PATH.$dir.'/'.$sub_dir.'/source_img/'.$img_name.$img_ext, $img_ext))
+        if (move_image_file(ROOT_PATH.$source_img, ROOT_PATH.$dir.'/'.$sub_dir.'/source_img/'.$img_name.$img_ext))
         {
             return $dir.'/'.$sub_dir.'/source_img/'.$img_name.$img_ext;
         }
     }
     elseif ($position == 'thumb')
     {
-        if (move_image_file(ROOT_PATH.$source_img, ROOT_PATH.$dir.'/'.$sub_dir.'/thumb_img/'.$img_name.$img_ext, $img_ext))
+        if (move_image_file(ROOT_PATH.$source_img, ROOT_PATH.$dir.'/'.$sub_dir.'/thumb_img/'.$img_name.$img_ext))
         {
             return $dir.'/'.$sub_dir.'/thumb_img/'.$img_name.$img_ext;
         }
     }
     else
     {
-        if (move_image_file(ROOT_PATH.$source_img, ROOT_PATH.$dir.'/'.$sub_dir.'/goods_img/'.$img_name.$img_ext, $img_ext))
+        if (move_image_file(ROOT_PATH.$source_img, ROOT_PATH.$dir.'/'.$sub_dir.'/goods_img/'.$img_name.$img_ext))
         {
             return $dir.'/'.$sub_dir.'/goods_img/'.$img_name.$img_ext;
         }
@@ -1353,18 +1353,11 @@ function reformat_image_name($type, $goods_id, $source_img, $position='')
     return false;
 }
 
-function move_image_file($source, $dest, $img_ext = '')
+function move_image_file($source, $dest)
 {
     if (@copy($source, $dest))
     {
-        // 文件扩展名存在时 只能移除图片格式文件 
-        if ($img_ext) {
-            if (in_array(strtolower($img_ext), array('.bmp','.jpg','.png','.tif','.gif','.pcx','.tga','.exif','.fpx','.svg','.psd','.cdr','.pcd','.dxf','.ufo','.eps','.ai','.raw','.wmf','.webp'))) {
-                @unlink($source);
-            }
-        } else {
-            @unlink($source);
-        }
+        @unlink($source);
         return true;
     }
     return false;

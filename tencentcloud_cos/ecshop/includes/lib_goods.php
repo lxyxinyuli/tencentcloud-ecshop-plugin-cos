@@ -3,7 +3,7 @@
 /**
  * ECSHOP 商品相关函数库
  * ============================================================================
- * * 版权所有 2005-2018 上海商派网络科技有限公司，并保留所有权利。
+ * * 版权所有 2005-2022 商派软件有限公司，并保留所有权利。
  * 网站地址: http://www.ecshop.com；
  * ----------------------------------------------------------------------------
  * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
@@ -93,7 +93,7 @@ function get_child_tree($tree_id = 0)
     {
         $child_sql = 'SELECT cat_id, cat_name, parent_id, is_show ' .
                 'FROM ' . $GLOBALS['ecs']->table('category') .
-                "WHERE parent_id = '$tree_id' AND is_show = 1 ORDER BY sort_order ASC, cat_id ASC";
+                "WHERE parent_id = '$tree_id' AND is_show = 1 ORDER BY sort_order ASC, cat_id ASC Limit 0,12" ;
         $res = $GLOBALS['db']->getAll($child_sql);
         foreach ($res AS $row)
         {
@@ -159,7 +159,7 @@ function get_top10($cats = '')
            "AND (o.pay_status = '" . PS_PAYED . "' OR o.pay_status = '" . PS_PAYING . "') " .
            "AND (o.shipping_status = '" . SS_SHIPPED . "' OR o.shipping_status = '" . SS_RECEIVED . "') " .
            'GROUP BY g.goods_id ORDER BY goods_number DESC, g.goods_id DESC LIMIT ' . $GLOBALS['_CFG']['top_number'];
-           
+
     $arr = $GLOBALS['db']->getAll($sql);
 
     for ($i = 0, $count = count($arr); $i < $count; $i++)
@@ -639,8 +639,6 @@ function get_goods_properties($goods_id)
     $arr['spe'] = array();     // 规格
     $arr['lnk'] = array();     // 关联的属性
 
-    if(empty($res)) return $arr;
-
     foreach ($res AS $row)
     {
         $row['attr_value'] = str_replace("\n", '<br />', $row['attr_value']);
@@ -668,27 +666,6 @@ function get_goods_properties($goods_id)
             /* 如果该属性需要关联，先保存下来 */
             $arr['lnk'][$row['attr_id']]['name']  = $row['attr_name'];
             $arr['lnk'][$row['attr_id']]['value'] = $row['attr_value'];
-        }
-    }
-    //保证属性排序正确
-    if(!empty($arr['spe'])){
-        $sql = "select * from ".$GLOBALS['ecs']->table('products')." where goods_id='$goods_id'";
-        $products = $GLOBALS['db']->getRow($sql);
-        $attr_ids_str = str_replace('|', ',', $products['goods_attr']);
-        $attr_ids = explode('|', $products['goods_attr']);
-        $sql = "select * from ".$GLOBALS['ecs']->table('goods_attr')." where goods_attr_id in ($attr_ids_str)";
-        $rows = $GLOBALS['db']->getAll($sql);
-        $new_attr = $_attr = [];
-        foreach ($rows as $key => $value) {
-            $_attr[$value['goods_attr_id']] = $value['attr_id'];
-        }
-        foreach ($attr_ids as $key => $value) {
-            $new_attr[] = $_attr[$value];
-        }
-        $spe = $arr['spe'];
-        unset($arr['spe']);
-        foreach ($new_attr as $key => $value) {
-            $arr['spe'][$key] = $spe[$value];
         }
     }
 
@@ -754,20 +731,21 @@ function get_goods_gallery($goods_id)
 {
     $sql = 'SELECT img_id, img_url, thumb_url, img_desc' .
         ' FROM ' . $GLOBALS['ecs']->table('goods_gallery') .
-        " WHERE goods_id = '$goods_id' order by sort_order LIMIT " . $GLOBALS['_CFG']['goods_gallery_number'];
+        " WHERE goods_id = '$goods_id' order by img_id LIMIT " . $GLOBALS['_CFG']['goods_gallery_number'];
     $row = $GLOBALS['db']->getAll($sql);
     /* 格式化相册图片路径 */
     foreach($row as $key => $gallery_img)
     {
         $row[$key]['img_url'] = get_image_path($goods_id, $gallery_img['img_url'], false, 'gallery');
         $row[$key]['thumb_url'] = get_image_path($goods_id, $gallery_img['thumb_url'], true, 'gallery');
+        //update
         $cos_options = isset($GLOBALS['_CFG']['cos_plugin']) ? json_decode($GLOBALS['_CFG']['cos_plugin'], true) : array();
         if (!empty($cos_options) && $cos_options['switch'] === '1' && $cos_options['remote_url'] != "") {
             $row[$key]['img_url'] = $cos_options['remote_url'] . "/" . $row[$key]['img_url'];
             $row[$key]['thumb_url'] = $cos_options['remote_url'] . "/" . $row[$key]['thumb_url'];
         }
+    //
     }
-
     return $row;
 }
 
@@ -1528,22 +1506,17 @@ function get_products_info($goods_id, $spec_goods_attr_id)
     {
         return $return_array;
     }
-    //保证属性排序正确
-    $goods_attr = implode('|', $spec_goods_attr_id);
-    $sql = "SELECT * FROM " .$GLOBALS['ecs']->table('products'). " WHERE goods_id = '$goods_id' AND goods_attr = '$goods_attr' LIMIT 0, 1";
-    $return_array = $GLOBALS['db']->getRow($sql);
+
+    $goods_attr_array = sort_goods_attr_id_array($spec_goods_attr_id);
+
+    if(isset($goods_attr_array['sort']))
+    {
+        $goods_attr = implode('|', $goods_attr_array['sort']);
+
+        $sql = "SELECT * FROM " .$GLOBALS['ecs']->table('products'). " WHERE goods_id = '$goods_id' AND goods_attr = '$goods_attr' LIMIT 0, 1";
+        $return_array = $GLOBALS['db']->getRow($sql);
+    }
     return $return_array;
-
-    // $goods_attr_array = sort_goods_attr_id_array($spec_goods_attr_id);
-
-    // if(isset($goods_attr_array['sort']))
-    // {
-    //     $goods_attr = implode('|', $goods_attr_array['sort']);
-
-    //     $sql = "SELECT * FROM " .$GLOBALS['ecs']->table('products'). " WHERE goods_id = '$goods_id' AND goods_attr = '$goods_attr' LIMIT 0, 1";
-    //     $return_array = $GLOBALS['db']->getRow($sql);
-    // }
-    // return $return_array;
 }
 
 
@@ -1560,5 +1533,30 @@ function get_cum_sales($goods_id)
     $sql_goods = "SELECT virtual_sales FROM " . $GLOBALS['ecs']->table('goods') . " WHERE goods_id = '$goods_id'";
     $cum_sales += $GLOBALS['db']->getOne($sql_goods);
     return $cum_sales;
+}
+
+
+/*fd30_cat_menu 指定分类菜单调用品牌列表 */
+function get_cat_brands($cat, $app = 'category')
+{
+    $children = ($cat > 0) ? ' AND ' . get_children($cat) : '';
+
+    $sql = "SELECT b.brand_id, b.brand_name, b.brand_logo, COUNT(g.goods_id) AS goods_num, IF(b.brand_logo > '', '1', '0') AS tag ".
+            "FROM " . $GLOBALS['ecs']->table('brand') . "AS b, ".
+                $GLOBALS['ecs']->table('goods') . " AS g ".
+            "WHERE g.brand_id = b.brand_id $children " .
+            "GROUP BY b.brand_id HAVING goods_num > 0 ORDER BY tag DESC, b.sort_order ASC  limit 0,12";
+
+	//print_r($cat);
+
+    $row = $GLOBALS['db']->getAll($sql);
+
+    foreach ($row AS $key => $val)
+    {
+        $row[$key]['url'] = build_uri($app, array('cid' => $cat, 'bid' => $val['brand_id']), $val['brand_name']);
+    }
+
+    return $row;
+
 }
 ?>

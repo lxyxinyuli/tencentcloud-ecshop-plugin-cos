@@ -3,11 +3,11 @@
 /**
  * ECSHOP 管理中心共用語言文件
  * ============================================================================
- * * 版權所有 2005-2018 上海商派網絡科技有限公司，並保留所有權利。
+ * 版權所有 2005-2021 商派軟件有限公司，並保留所有權利。
  * 網站地址: http://www.ecshop.com；
  * ----------------------------------------------------------------------------
  * 這不是一個自由軟件！您只能在不用於商業目的的前提下對程序代碼進行修改和
- * 使用；不允許對程序代碼以任何形式任何目的的再發布。
+ * 使用；不允許對程序代碼以任何形式任何目的的再發佈。
  * ============================================================================
  * $Author: liubo $
  * $Id: common.php 17217 2011-01-19 06:29:08Z liubo $
@@ -15,10 +15,10 @@
 
 $_LANG['app_name'] = 'ECSHOP';
 $_LANG['cp_home'] = 'ECSHOP 管理中心';
-$_LANG['copyright'] = '版權所有 &copy; 2005-'. date('Y') .' 上海商派軟件有限公司，並保留所有權利。';
+$_LANG['copyright'] = '版權所有 &copy; 2005- '. date('Y') .' 商派軟件有限公司，並保留所有權利。';
 $_LANG['query_info'] = '共執行 %d 個查詢，用時 %s 秒';
 $_LANG['memory_info'] = '，內存佔用 %0.3f MB';
-$_LANG['gzip_enabled'] = '，Gzip 已啓用';
+$_LANG['gzip_enabled'] = '，Gzip 已啟用';
 $_LANG['gzip_disabled'] = '，Gzip 已禁用';
 $_LANG['loading'] = '正在處理您的請求...';
 $_LANG['js_languages']['process_request'] = '正在處理您的請求...';
@@ -30,7 +30,7 @@ $_LANG['js_languages']['todolist_confirm_save'] = '是否將更改保存到記�
 $_LANG['js_languages']['todolist_confirm_clear'] = '是否清空內容？';
 $_LANG['auto_redirection'] = '如果您不做出選擇，將在 <span id="spanSeconds">3</span> 秒後跳轉到第一個鏈接地址。';
 $_LANG['password_rule'] = '密碼應只包含英文字符、數字.長度在6--16位之間';
-$_LANG['username_rule'] = '用戶名應爲漢字、英文字符、數字組合，3到15位';
+$_LANG['username_rule'] = '用戶名應為漢字、英文字符、數字組合，3到15位';
 $_LANG['plugins_not_found'] = '插件 %s 無法定位';
 $_LANG['no_records'] = '沒有找到任何記錄';
 $_LANG['role_describe'] = '角色描述';
@@ -48,9 +48,9 @@ $_LANG['edit'] = '編輯';
 $_LANG['view'] = '查看';
 $_LANG['remove'] = '移除';
 $_LANG['drop'] = '刪除';
-$_LANG['confirm_delete'] = '您確定要刪除嗎？';
+$_LANG['confirm_delete'] = '您確定要刪除嗎?';
 $_LANG['disabled'] = '禁用';
-$_LANG['enabled'] = '啓用';
+$_LANG['enabled'] = '啟用';
 $_LANG['setup'] = '設置';
 $_LANG['success'] = '成功';
 $_LANG['sort_order'] = '排序';
@@ -61,9 +61,9 @@ $_LANG['btn_select'] = '選擇';
 $_LANG['operator'] = '操作人';
 $_LANG['cancel'] = '取消';
 
-$_LANG['empty'] = '不能爲空';
+$_LANG['empty'] = '不能為空';
 $_LANG['repeat'] = '已存在';
-$_LANG['is_int'] = '應該爲整數';
+$_LANG['is_int'] = '應該為整數';
 
 $_LANG['button_submit'] = ' 確定 ';
 $_LANG['button_save'] = ' 保存 ';
@@ -72,11 +72,11 @@ $_LANG['button_search'] = ' 搜索 ';
 $_LANG['advanced_search'] = '高級搜索';
 
 $_LANG['priv_error'] = '對不起,您沒有執行此項操作的權限!';
-$_LANG['drop_confirm'] = '您確認要刪除這條記錄嗎?';
+$_LANG['drop_confirm'] = '您確定要刪除這條記錄嗎?';
 $_LANG['form_notice'] = '點擊此處查看提示信息';
 $_LANG['upfile_type_error'] = '上傳文件的類型不正確!';
 $_LANG['upfile_error'] = '上傳文件失敗!';
-$_LANG['no_operation'] = '您沒有選擇任何操作';
+$_LANG['no_operation'] = '你沒有選擇任何操作';
 
 $_LANG['go_back'] = '返回上一頁';
 $_LANG['back'] = '返回';
@@ -116,7 +116,7 @@ $_LANG['english'] = '英文';
 
 /* 分頁 */
 $_LANG['total_records'] = '總計 ';
-$_LANG['total_pages'] = '個記錄分爲';
+$_LANG['total_pages'] = '個記錄分為';
 $_LANG['page_size'] = '頁，每頁';
 $_LANG['page_current'] = '頁當前第';
 $_LANG['page_first'] = '第一頁';
@@ -145,13 +145,12 @@ $_LANG['12_template'] = '模板管理';
 $_LANG['13_backup'] = '數據庫管理';
 $_LANG['14_sms'] = '短信管理';
 $_LANG['15_rec'] = '推薦管理';
-$_LANG['16_email_manage'] = '郵件羣發管理';
-$_LANG['18_lead_manage'] = '移動端管理';
-$_LANG['19_tencent_plugins'] = '騰訊雲設置';
+$_LANG['16_email_manage'] = '郵件群發管理';
+$_LANG['18_lead_manage'] = '移動版管理';
 
 /* 商品管理 */
 $_LANG['01_goods_list'] = '商品列表';
-$_LANG['02_goods_add'] = '添加新商品';
+$_LANG['02_goods_add'] = '添加商品';
 $_LANG['03_category_list'] = '商品分類';
 $_LANG['04_category_add'] = '添加分類';
 $_LANG['05_comment_manage'] = '用戶評論';
@@ -172,7 +171,7 @@ $_LANG['53_suppliers_goods'] = '供貨商商品管理';
 
 $_LANG['14_goods_export'] = '商品批量導出';
 
-$_LANG['50_virtual_card_list'] = '虛擬商品列表';
+$_LANG['50_virtual_card_list'] = '虛擬卡商品列表';
 $_LANG['51_virtual_card_add'] = '添加虛擬商品';
 $_LANG['52_virtual_card_change'] = '更改加密串';
 $_LANG['goods_auto'] = '商品自動上下架';
@@ -188,8 +187,8 @@ $_LANG['05_bonus_list'] = '線下紅包';
 $_LANG['bonus_add'] = '添加會員紅包';
 $_LANG['06_pack_list'] = '商品包裝';
 $_LANG['07_card_list'] = '祝福賀卡';
-$_LANG['pack_add'] = '添加新包裝';
-$_LANG['card_add'] = '添加新賀卡';
+$_LANG['pack_add'] = '添加包裝';
+$_LANG['card_add'] = '添加賀卡';
 $_LANG['08_group_buy'] = '團購活動';
 $_LANG['09_topic'] = '專題管理';
 $_LANG['topic_add'] = '添加專題';
@@ -197,7 +196,7 @@ $_LANG['topic_list'] = '專題列表';
 $_LANG['10_auction'] = '拍賣活動';
 $_LANG['12_favourable'] = '優惠活動';
 $_LANG['13_wholesale'] = '批發管理';
-$_LANG['ebao_commend'] = '易寶推薦';
+//$_LANG['ebao_commend'] = '易寶推薦';
 $_LANG['14_package_list'] = '超值禮包';
 $_LANG['package_add'] = '添加超值禮包';
 
@@ -231,7 +230,7 @@ $_LANG['z_clicks_stats'] = '站外投放JS';
 $_LANG['02_articlecat_list'] = '文章分類';
 $_LANG['articlecat_add'] = '添加文章分類';
 $_LANG['03_article_list'] = '文章列表';
-$_LANG['article_add'] = '添加新文章';
+$_LANG['article_add'] = '添加文章';
 $_LANG['shop_article'] = '網店文章';
 $_LANG['shop_info'] = '網店信息';
 $_LANG['shop_help'] = '網店幫助';
@@ -242,7 +241,7 @@ $_LANG['08_unreply_msg'] = '會員留言';
 $_LANG['03_users_list'] = '會員列表';
 $_LANG['04_users_add'] = '添加會員';
 $_LANG['05_user_rank_list'] = '會員等級';
-$_LANG['06_list_integrate'] = '會員整合';
+//$_LANG['06_list_integrate'] = '會員整合';
 $_LANG['09_user_account'] = '充值和提現申請';
 $_LANG['10_user_account_manage'] = '資金管理';
 
@@ -250,9 +249,9 @@ $_LANG['10_user_account_manage'] = '資金管理';
 $_LANG['admin_list'] = '管理員列表';
 $_LANG['admin_list_role'] = '角色列表';
 $_LANG['admin_role'] = '角色管理';
+$_LANG['admin_edit_role'] = '修改角色';
 $_LANG['admin_add'] = '添加管理員';
 $_LANG['admin_add_role'] = '添加角色';
-$_LANG['admin_edit_role'] = '修改角色';
 $_LANG['admin_logs'] = '管理員日誌';
 $_LANG['agency_list'] = '辦事處列表';
 $_LANG['suppliers_list'] = '供貨商列表';
@@ -260,7 +259,7 @@ $_LANG['suppliers_list'] = '供貨商列表';
 /* 系統設置 */
 $_LANG['01_shop_config'] = '商店設置';
 // $_LANG['shop_authorized'] = '授權證書';
-$_LANG['shp_webcollect'] = '網羅天下';
+//$_LANG['shp_webcollect'] = '網羅天下';
 $_LANG['02_payment_list'] = '支付方式';
 $_LANG['03_shipping_list'] = '配送方式';
 $_LANG['04_mail_settings'] = '郵件服務器設置';
@@ -271,8 +270,8 @@ $_LANG['shipping_area_list'] = '配送區域';
 $_LANG['sitemap'] = '站點地圖';
 $_LANG['check_file_priv'] = '文件權限檢測';
 $_LANG['captcha_manage'] = '驗證碼管理';
-$_LANG['fckfile_manage'] = 'Fck上傳文件管理';
-$_LANG['ucenter_setup'] = 'UCenter設置';
+//$_LANG['fckfile_manage'] = 'Fck上傳文件管理';
+//$_LANG['ucenter_setup'] = 'UCenter設置';
 $_LANG['file_check'] = '文件校驗';
 $_LANG['021_reg_fields'] = '會員註冊項設置';
 
@@ -289,7 +288,6 @@ $_LANG['03_db_optimize'] = '數據表優化';
 $_LANG['04_sql_query'] = 'SQL查詢';
 $_LANG['05_synchronous'] = '同步數據';
 $_LANG['convert'] = '轉換數據';
-$_LANG['clear'] = '體驗數據清除';
 
 /* 短信管理 */
 $_LANG['02_sms_my_info'] = '賬號信息';
@@ -298,22 +296,19 @@ $_LANG['04_sms_charge'] = '賬戶充值';
 $_LANG['05_sms_send_history'] = '發送記錄';
 $_LANG['06_sms_charge_history'] = '充值記錄';
 
-
-
-
 $_LANG['affiliate'] = '推薦設置';
 $_LANG['affiliate_ck'] = '分成管理';
-$_LANG['flashplay'] = '首頁主廣告管理';
+$_LANG['flashplay'] = '首页主广告管理';
 $_LANG['search_log'] = '搜索關鍵字';
 $_LANG['email_list'] = '郵件訂閱管理';
 $_LANG['magazine_list'] = '雜誌管理';
 $_LANG['attention_list'] = '關注管理';
 $_LANG['view_sendlist'] = '郵件隊列管理';
 
-/* 積分兌換管理 */
+/* 积分兑换管理 */
 $_LANG['15_exchange_goods'] = '積分商城商品';
 $_LANG['15_exchange_goods_list'] = '積分商城商品列表';
-$_LANG['exchange_goods_add'] = '添加新商品';
+$_LANG['exchange_goods_add'] = '添加积分商品';
 
 /* cls_image類的語言項 */
 $_LANG['directory_readonly'] = '目錄 % 不存在或不可寫';
@@ -324,9 +319,9 @@ $_LANG['missing_orgin_image'] = '找不到原始圖片 %s ';
 $_LANG['nonsupport_type'] = '不支持該圖像格式 %s ';
 $_LANG['creating_failure'] = '創建圖片失敗';
 $_LANG['writting_failure'] = '圖片寫入失敗';
-$_LANG['empty_watermark'] = '水印文件參數不能爲空';
+$_LANG['empty_watermark'] = '水印文件參數不能為空';
 $_LANG['missing_watermark'] = '找不到水印文件%s';
-$_LANG['create_watermark_res'] = '創建水印圖片資源失敗。水印圖片類型爲%s';
+$_LANG['create_watermark_res'] = '創建水印圖片資源失敗，水印圖片類型為%s';
 $_LANG['create_origin_image_res'] = '創建原始圖片資源失敗，原始圖片類型%s';
 $_LANG['invalid_image_type'] = '無法識別水印圖片 %s ';
 $_LANG['file_unavailable'] = '文件 %s 不存在或不可讀';
@@ -352,24 +347,16 @@ $_LANG['alipay_login'] = '<a href="https://www.alipay.com/user/login.htm?goto=ht
 $_LANG['alipay_look'] = '<a href=\"https://www.alipay.com/himalayas/practicality.htm\" target=\"_blank\">請申請成功後登錄支付寶賬戶查看</a>';
 
 
-
 $_LANG['04_sms_sign'] = '短信簽名';
 
 /* 雲服務中心 */
 $_LANG['certificate'] = '授權綁定';
 $_LANG['service_market'] = '服務市場';
-$_LANG['sms_resource'] = '短信平臺';
-/*雲起物流*/
+$_LANG['sms_resource'] = '短信平台';
 $_LANG['logistic_tracking'] = '雲起物流';
 
 /* 移動版全民分銷開通引導頁 */
-$_LANG['banner_mobile'] = '移動端廣告配置';
-$_LANG['lead'] = 'H5店鋪二維碼';
-$_LANG['mobile_setting'] = 'APP應用配置';
-$_LANG['h5_setting'] = 'H5應用配置';
-$_LANG['wxa_setting'] = '小程序應用配置';
-$_LANG['leancloud'] = 'APP推送管理';
-
+$_LANG['lead'] = '移動版';
 /* 騰訊插件管理*/
 $_LANG['1tencent_center'] = '公共配置';
 $_LANG['2tencent_captcha'] = '驗證碼配置';

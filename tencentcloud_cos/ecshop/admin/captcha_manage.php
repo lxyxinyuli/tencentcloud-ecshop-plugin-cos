@@ -29,6 +29,7 @@ if ($_REQUEST['act'] == 'main')
     {
         sys_msg($_LANG['captcha_note'], 1);
     }
+
     assign_query_info();
     $captcha = intval($_CFG['captcha']);
 
@@ -61,7 +62,7 @@ if ($_REQUEST['act'] == 'main')
     {
         $captcha_check['login_fail_no']     = 'checked="checked"';
     }
-
+    //update
     $captcha_type = isset($_CFG['captcha_type']) ? $_CFG['captcha_type'] : '';
     if (!empty($captcha_type) && $captcha_type == '2')
     {
@@ -79,15 +80,16 @@ if ($_REQUEST['act'] == 'main')
     {
         $captcha_check['captcha_app_id'] = $data['captcha_app_id'];
     }
+    //
+
+
     $smarty->assign('captcha',          $captcha_check);
     $smarty->assign('captcha_width',    $_CFG['captcha_width']);
     $smarty->assign('captcha_height',   $_CFG['captcha_height']);
     $smarty->assign('ur_here',          $_LANG['captcha_manage']);
     $smarty->display('captcha_manage.htm');
 }
-
-/*------------------------------------------------------ */
-//-- 腾讯验证码接口测试
+//update 腾讯验证码接口测试
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'tencent_cpatcha_test')
 {
@@ -106,6 +108,7 @@ if ($_REQUEST['act'] == 'tencent_cpatcha_test')
     }
     echo 'true';
 }
+//
 
 /*------------------------------------------------------ */
 //-- 保存设置
@@ -120,11 +123,12 @@ if ($_REQUEST['act'] == 'save_config')
     $captcha = empty($_POST['captcha_admin'])       ? $captcha : $captcha | CAPTCHA_ADMIN;
     $captcha = empty($_POST['captcha_login_fail'])  ? $captcha : $captcha | CAPTCHA_LOGIN_FAIL;
     $captcha = empty($_POST['captcha_message'])     ? $captcha : $captcha | CAPTCHA_MESSAGE;
-
+    //update
     $captcha_type_value = empty($_POST['captcha_type'])     ? 2 : intval($_POST['captcha_type']);
+//
     $captcha_width = empty($_POST['captcha_width'])     ? 145 : intval($_POST['captcha_width']);
     $captcha_height = empty($_POST['captcha_height'])   ? 20 : intval($_POST['captcha_height']);
-
+//update
     $captcha_type = get_captcha_type();
     if (empty($captcha_type))
     {
@@ -134,6 +138,7 @@ if ($_REQUEST['act'] == 'save_config')
         $sql = "UPDATE " . $ecs->table('shop_config') . " SET value='$captcha_type_value' WHERE code='captcha_type'";
         $db->query($sql);
     }
+//
 
     $sql = "UPDATE " . $ecs->table('shop_config') . " SET value='$captcha' WHERE code='captcha'";
     $db->query($sql);
@@ -143,9 +148,10 @@ if ($_REQUEST['act'] == 'save_config')
     $db->query($sql);
 
     clear_cache_files();
+
     sys_msg($_LANG['save_ok'], 0, array(array('href'=>'captcha_manage.php?act=main', 'text'=>$_LANG['captcha_manage'])));
 }
-
+//update
 function get_captcha_type()
 {
     $sql = "select value from " . $GLOBALS['ecs']->table('shop_config')." where code='captcha_type'";
@@ -165,5 +171,7 @@ function get_captcha_plugin()
     $captcha_plugin  = !empty($captcha_plugin) && is_string($captcha_plugin) ? json_decode($captcha_plugin, true) : array();
     return $captcha_plugin;
 }
+//
+
 
 ?>

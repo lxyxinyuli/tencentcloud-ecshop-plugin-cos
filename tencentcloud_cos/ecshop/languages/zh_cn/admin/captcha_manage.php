@@ -3,7 +3,7 @@
 /**
  * ECSHOP
  * ============================================================================
- * * 版权所有 2005-2018 上海商派网络科技有限公司，并保留所有权利。
+ * * 版权所有 2005-2021 商派软件有限公司，并保留所有权利。
  * 网站地址: http://www.ecshop.com；
  * ----------------------------------------------------------------------------
  * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
@@ -14,7 +14,7 @@
 */
 
 $_LANG['captcha_manage'] = '验证码设置';
-$_LANG['captcha_note'] = '开启验证码需要服务GD库支持，而您的服务器不支持GD。';
+$_LANG['captcha_note'] = '开启验证码需要服务器php环境开启GD库功能，而您的服务器没开启GD。';
 
 $_LANG['captcha_setting'] = '验证码设置';
 $_LANG['captcha_turn_on'] = '启用验证码';
@@ -35,9 +35,9 @@ $_LANG['js_languages']['proper_width'] = '图片宽度要在40到145之间!';
 $_LANG['js_languages']['height_number'] = '图片高度请输入数字!';
 $_LANG['js_languages']['proper_height'] = '图片高度要在15到50之间!';
 
-$_LANG['save_ok'] = '设置保存成功';
+$_LANG['save_ok'] = '设置保存成功！';
 $_LANG['captcha_message'] = '留言板留言';
-
+//update
 $_LANG['captcha_type'] = '验证码类型';
 $_LANG['captcha_type_note'] = '英文图片验证码是ecshop自带的含字母数字的图片验证方式，腾讯云验证码为图片拖动验证类型';
 $_LANG['default_type'] = '英文图片验证码';
@@ -46,5 +46,4 @@ $_LANG['open_captcha_config'] = '打开验证码配置';
 $_LANG['captcha_machine_test'] = '人机验证';
 $_LANG['captcha_machine_test_pass'] = '人机验证通过';
 $_LANG['captcha_machine_test_fail'] = '人机验证失败，请打开验证码配置，填写腾讯云验证码配置信息并确保信息正确。';
-
-?>
+//

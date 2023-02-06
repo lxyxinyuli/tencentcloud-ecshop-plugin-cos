@@ -147,7 +147,6 @@ $_LANG['15_rec'] = 'Recommend management';
 $_LANG['16_email_manage'] = 'Mass-mailing management';
 $_LANG['18_lead_manage'] = 'Mobile version management';
 $_LANG['19_tencent_plugins'] = 'Tencent plugin management';
-
 /* Product management */
 $_LANG['01_goods_list'] = 'Product List';
 $_LANG['02_goods_add'] = 'New Product';
@@ -240,7 +239,7 @@ $_LANG['08_unreply_msg'] = 'User Message';
 $_LANG['03_users_list'] = 'Users';
 $_LANG['04_users_add'] = 'New User';
 $_LANG['05_user_rank_list'] = 'User Rank';
-$_LANG['06_list_integrate'] = 'Integrate User';
+//$_LANG['06_list_integrate'] = 'Integrate User';
 $_LANG['09_user_account'] = 'Saving and drawing application';
 $_LANG['10_user_account_manage'] = 'account_manage';
 
@@ -355,7 +354,7 @@ $_LANG['sms_resource'] = 'Sms resource';
 $_LANG['service_market'] = 'Service Market';
 
 /*云起物流*/
-$_LANG['logistic_tracking'] = 'Logistic Tracking';
+//$_LANG['logistic_tracking'] = 'Logistic Tracking';
 
 /* 移动版全民分销开通引导页 */
 $_LANG['lead'] = 'wap';

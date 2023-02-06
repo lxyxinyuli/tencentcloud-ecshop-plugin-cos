@@ -3,7 +3,7 @@
 /**
  * ECSHOP 管理员信息以及权限管理程序
  * ============================================================================
- * * 版权所有 2005-2018 上海商派网络科技有限公司，并保留所有权利。
+ * * 版权所有 2005-2022 商派软件有限公司，并保留所有权利。
  * 网站地址: http://www.ecshop.com；
  * ----------------------------------------------------------------------------
  * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
@@ -39,7 +39,7 @@ if ($_REQUEST['act'] == 'logout')
 
     $sess->destroy_session();
     $url = $GLOBALS['ecs']->url()."admin/privilege.php?act=login";
-    echo "<script>window.top.location.replace('".$url."');</script>"; 
+    echo "<script>window.top.location.replace('".$url."');</script>";
 }
 
 //获取3.0授权信息
@@ -58,13 +58,13 @@ if ($_REQUEST['act'] == 'login')
     header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
     header("Cache-Control: no-cache, must-revalidate");
     header("Pragma: no-cache");
-    
+
     if($_REQUEST['type']=='yunqi'){
         $ecs = $GLOBALS['ecs'];
         $db = $GLOBALS['db'];
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
         header("Cache-Control: no-cache, must-revalidate");
-        header("Pragma: no-cache");        
+        header("Pragma: no-cache");
         if(isset($_GET['code']) && $_GET['code']){
             $code = $_GET['code'];
             $res = $cert->get_token($code);
@@ -80,7 +80,7 @@ if ($_REQUEST['act'] == 'login')
                     " WHERE passport_uid = '" . $res['params']['passport_uid']."'";
                 $admin_row = $db->getRow($sql);
                 if($certificate['passport_uid']!=$res['params']['passport_uid'] || $admin_row['passport_uid']!=$res['params']['passport_uid']){
-                    $_SESSION['login_err'] = '您好，您的账号尚未激活,请使用本地账号登录!'; 
+                    $_SESSION['login_err'] = '您好，您的账号尚未激活,请使用本地账号登录!';
                     yunqi_logout();
                 }
                 if ($admin_row){
@@ -152,14 +152,14 @@ if ($_REQUEST['act'] == 'login')
                     // 清除购物车中过期的数据
                     clear_cart();
                     exit('<script>top.location.href="./index.php"</script>');
-                    // ecs_header("Location: ./index.php\n");exit;
                 }
             }
         }else{
-            
+
         }
     }else{
         if ((intval($_CFG['captcha']) & CAPTCHA_ADMIN) && gd_version() > 0){
+            //update
             $captcha_type =  isset($_CFG['captcha_type']) ? $_CFG['captcha_type'] : '1';
             $data  = isset($_CFG['captcha_plugin']) ? json_decode($_CFG['captcha_plugin'], true) : array();
             if ($captcha_type ==='2' && isset($data['captcha_app_id']))
@@ -169,6 +169,8 @@ if ($_REQUEST['act'] == 'login')
             $smarty->assign('captcha', $captcha_check);
 
             $smarty->assign('captcha_type', $captcha_type);
+            //
+
             $smarty->assign('gd_version', gd_version());
             $smarty->assign('random',     mt_rand());
         }
@@ -177,11 +179,11 @@ if ($_REQUEST['act'] == 'login')
             unset($_SESSION['login_err']);
         }
         $smarty->assign('certi',$certificate);
-        
+
         $activate_callback = $GLOBALS['ecs']->url()."admin/certificate.php?act=get_certificate&type=index";
         $activate_iframe_url = $cert->get_authorize_url($activate_callback);
         $smarty->assign('activate_iframe_url',$activate_iframe_url);
-        
+
         $callback = $GLOBALS['ecs']->url()."admin/privilege.php?act=login&type=yunqi";
         $iframe_url = $cert->get_authorize_url($callback);
         $smarty->assign('iframe_url',$iframe_url);
@@ -204,17 +206,20 @@ elseif ($_REQUEST['act'] == 'signin')
 {
     if (intval($_CFG['captcha']) & CAPTCHA_ADMIN)
     {
+        //update
         $captcha_type =  isset($_CFG['captcha_type']) ? $_CFG['captcha_type'] : '1';
         if ($captcha_type === '1')
         {
+        //
             include_once(ROOT_PATH . 'includes/cls_captcha.php');
 
-            /* 检查验证码是否正确 */
-            $validator = new captcha();
-            if (!empty($_POST['captcha']) && !$validator->check_word($_POST['captcha']))
-            {
-                sys_msg($_LANG['captcha_error'], 1);
-            }
+        /* 检查验证码是否正确 */
+        $validator = new captcha();
+        if (!empty($_POST['captcha']) && !$validator->check_word($_POST['captcha']))
+//update
+        {
+            sys_msg($_LANG['captcha_error'], 1);
+        }
         }
         else
         {
@@ -227,6 +232,7 @@ elseif ($_REQUEST['act'] == 'signin')
             {
                 sys_msg($_LANG['captcha_error'], 1);
             }
+//
         }
     }
 
@@ -297,11 +303,6 @@ elseif ($_REQUEST['act'] == 'signin')
             setcookie('ECSCP[admin_pass]', md5($row['password'] . $_CFG['hash_code'] . $row['add_time']), $time, NULL, NULL, NULL, TRUE);
         }
 
-        //修复后台登录频繁退出的问题
-        $time = gmtime() + 3600 * 24 * 365;
-        setcookie('ECSCP[admin_id]', $row['user_id'], $time);
-        setcookie('ECSCP[admin_pass]', md5($row['password'] . $_CFG['hash_code']), $time);
-
         // 清除购物车中过期的数据
         clear_cart();
 
@@ -324,8 +325,11 @@ elseif ($_REQUEST['act'] == 'list')
     $smarty->assign('ur_here',     $_LANG['admin_list']);
     $smarty->assign('action_link', array('href'=>'privilege.php?act=add', 'text' => $_LANG['admin_add']));
     $smarty->assign('full_page',   1);
-    $smarty->assign('admin_list',  get_admin_userlist());
-
+    $data = get_admin_userlist();
+    foreach ($data as $key => $val) {
+        $data[$key]['x_email'] = substr_cut($data[$key]['email']);
+    }
+    $smarty->assign('admin_list',  $data);
     /* 显示页面 */
     assign_query_info();
     $smarty->display('privilege_list.htm');
@@ -348,7 +352,9 @@ elseif ($_REQUEST['act'] == 'add')
 {
     /* 检查权限 */
     admin_priv('admin_manage');
-
+    if (parse_url($_SERVER['HTTP_REFERER'])['host']!=$_SERVER['HTTP_HOST']){
+        sys_msg('error', 1);
+    }
      /* 模板赋值 */
     $smarty->assign('ur_here',     $_LANG['admin_add']);
     $smarty->assign('action_link', array('href'=>'privilege.php?act=list', 'text' => $_LANG['admin_list']));
@@ -371,14 +377,15 @@ elseif ($_REQUEST['act'] == 'insert')
     {
          sys_msg('add_error', 1);
     }
+    $user_name = filter_compile($_POST['user_name']);
     /* 判断管理员是否已经存在 */
-    if (!empty($_POST['user_name']))
+    if (!empty($user_name))
     {
-        $is_only = $exc->is_only('user_name', stripslashes($_POST['user_name']));
+        $is_only = $exc->is_only('user_name', $user_name);
 
         if (!$is_only)
         {
-            sys_msg(sprintf($_LANG['user_name_exist'], stripslashes($_POST['user_name'])), 1);
+            sys_msg(sprintf($_LANG['user_name_exist'], $user_name), 1);
         }
     }
 
@@ -395,7 +402,7 @@ elseif ($_REQUEST['act'] == 'insert')
 
     /* 获取添加日期及密码 */
     $add_time = gmtime();
-    
+
     $password  = md5($_POST['password']);
     $role_id = '';
     $action_list = '';
@@ -412,7 +419,7 @@ elseif ($_REQUEST['act'] == 'insert')
 
 
     $sql = "INSERT INTO ".$ecs->table('admin_user')." (user_name, email, password, add_time, nav_list, action_list, role_id) ".
-           "VALUES ('".trim($_POST['user_name'])."', '".trim($_POST['email'])."', '$password', '$add_time', '$row[nav_list]', '$action_list', '$role_id')";
+           "VALUES ('".filter_compile($_POST['user_name'])."', '".filter_compile($_POST['email'])."', '$password', '$add_time', '$row[nav_list]', '$action_list', '$role_id')";
 
     $db->query($sql);
     /* 转入权限分配列表 */
@@ -420,15 +427,15 @@ elseif ($_REQUEST['act'] == 'insert')
 
     /*添加链接*/
     $link[0]['text'] = $_LANG['go_allot_priv'];
-    $link[0]['href'] = 'privilege.php?act=allot&id='.$new_id.'&user='.$_POST['user_name'].'';
+    $link[0]['href'] = 'privilege.php?act=allot&id='.$new_id.'&user='.filter_compile($_POST['user_name']).'';
 
     $link[1]['text'] = $_LANG['continue_add'];
     $link[1]['href'] = 'privilege.php?act=add';
 
-    sys_msg($_LANG['add'] . "&nbsp;" .$_POST['user_name'] . "&nbsp;" . $_LANG['action_succeed'],0, $link);
+    sys_msg($_LANG['add'] . "&nbsp;" .filter_compile($_POST['user_name']) . "&nbsp;" . $_LANG['action_succeed'],0, $link);
 
     /* 记录管理员操作 */
-    admin_log($_POST['user_name'], 'add', 'privilege');
+    admin_log(filter_compile($_POST['user_name']), 'add', 'privilege');
  }
 
 /*------------------------------------------------------ */
@@ -442,7 +449,9 @@ elseif ($_REQUEST['act'] == 'edit')
        $link[] = array('text' => $_LANG['back_list'], 'href'=>'privilege.php?act=list');
        sys_msg($_LANG['edit_admininfo_cannot'], 0, $link);
     }
-
+    if (parse_url($_SERVER['HTTP_REFERER'])['host']!=$_SERVER['HTTP_HOST']){
+        sys_msg('error', 1);
+    }
     $_REQUEST['id'] = !empty($_REQUEST['id']) ? intval($_REQUEST['id']) : 0;
 
     /* 查看是否有权限编辑其他管理员的信息 */
@@ -492,8 +501,8 @@ elseif ($_REQUEST['act'] == 'update' || $_REQUEST['act'] == 'update_self')
 
     /* 变量初始化 */
     $admin_id    = !empty($_REQUEST['id'])        ? intval($_REQUEST['id'])      : 0;
-    $admin_name  = !empty($_REQUEST['user_name']) ? trim($_REQUEST['user_name']) : '';
-    $admin_email = !empty($_REQUEST['email'])     ? trim($_REQUEST['email'])     : '';
+    $admin_name  = !empty($_REQUEST['user_name']) ? filter_compile($_REQUEST['user_name']) : '';
+    $admin_email = !empty($_REQUEST['email'])     ? filter_compile($_REQUEST['email'])     : '';
     $ec_salt=rand(1,9999);
     $password = !empty($_POST['new_password']) ? ", password = '".md5(md5($_POST['new_password']).$ec_salt)."'"    : '';
     if($_POST['token']!=$_CFG['token'])
@@ -577,10 +586,11 @@ elseif ($_REQUEST['act'] == 'update' || $_REQUEST['act'] == 'update_self')
     $action_list = '';
     if (!empty($_POST['select_role']))
     {
-        $sql = "SELECT action_list FROM " . $ecs->table('role') . " WHERE role_id = '".$_POST['select_role']."'";
+        $select_role = filter_compile($_POST['select_role']);
+        $sql = "SELECT action_list FROM " . $ecs->table('role') . " WHERE role_id = '".$select_role."'";
         $row = $db->getRow($sql);
         $action_list = ', action_list = \''.$row['action_list'].'\'';
-        $role_id = ', role_id = '.$_POST['select_role'].' ';
+        $role_id = ', role_id = '.$select_role.' ';
     }
     //更新管理员信息
     if($pwd_modified)
@@ -608,7 +618,7 @@ elseif ($_REQUEST['act'] == 'update' || $_REQUEST['act'] == 'update_self')
 
    $db->query($sql);
    /* 记录管理员操作 */
-   admin_log($_POST['user_name'], 'edit', 'privilege');
+   admin_log(filter_compile($_POST['user_name']), 'edit', 'privilege');
 
    /* 如果修改了密码，则需要将session中该管理员的数据清空 */
    if ($pwd_modified && $_REQUEST['act'] == 'update_self')
@@ -770,7 +780,7 @@ elseif ($_REQUEST['act'] == 'allot')
 
         foreach ($action_group['priv'] AS $key => $val)
         {
-            $priv_arr[$action_id]['priv'][$key]['cando'] = (strpos($priv_str, $val['action_code']) !== false || $priv_str == 'all') ? 1 : 0;
+            $priv_arr[$action_id]['priv'][$key]['cando'] = (strpos(','.$priv_str.',', ','.$val['action_code'].',') !== false || $priv_str == 'all') ? 1 : 0;
         }
     }
 
@@ -781,7 +791,6 @@ elseif ($_REQUEST['act'] == 'allot')
     $smarty->assign('priv_arr',    $priv_arr);
     $smarty->assign('form_act',    'update_allot');
     $smarty->assign('user_id',     $_GET['id']);
-
     /* 显示页面 */
     assign_query_info();
     $smarty->display('privilege_allot.htm');
@@ -933,7 +942,7 @@ function yunqi_logout(){
     $cert = new certificate();
     $url = $cert->logout_url();
     header("location: $url");
-    
+
 }
 
 function getYunqiAd($ident){
@@ -955,6 +964,18 @@ function getYunqiAd($ident){
         return false;
     }
     return $results['data'];
+}
+
+function substr_cut($user_name)
+{
+    $strlen = mb_strlen($user_name, 'utf-8');
+    $firstStr = mb_substr($user_name, 0, 1, 'utf-8');
+
+    if ($strlen < 2) {
+        return $user_name;
+    } else {
+        return $strlen == 2 ? $firstStr . str_repeat('*', mb_strlen($user_name, 'utf-8') - 1) : $firstStr . str_repeat("*", $strlen - 2) . "*";
+    }
 }
 
 ?>

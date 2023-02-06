@@ -208,6 +208,7 @@ function FileUpload( $resourceType, $currentFolder, $sCommand )
             while ( true )
             {
                 $sFilePath = $sServerDir . $sFileName ;
+
                 if ( is_file( $sFilePath ) )
                 {
                     $iCounter++ ;
@@ -277,6 +278,7 @@ function FileUpload( $resourceType, $currentFolder, $sCommand )
 
     $sFileUrl = CombinePaths( GetResourceTypePath( $resourceType, $sCommand ) , $currentFolder ) ;
     $sFileUrl = CombinePaths( $sFileUrl, $sFileName ) ;
+    //update
     /* 上传到腾讯云存储 */
     $cos_options = isset($GLOBALS['_CFG']['cos_plugin']) ? json_decode($GLOBALS['_CFG']['cos_plugin'], true) : array();
 
@@ -286,7 +288,9 @@ function FileUpload( $resourceType, $currentFolder, $sCommand )
         $tencent_cos = new tencent_cos($cos_options);
         $tencent_cos->uploadFilesToCos($GLOBALS['_SERVER']['DOCUMENT_ROOT'] . '/', $cos_file_path);
     }
+    //
     SendUploadResults( $sErrorNumber, $sFileUrl, $sFileName ) ;
+
     exit ;
 }
 
